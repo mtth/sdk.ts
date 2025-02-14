@@ -1,0 +1,29 @@
+{
+  "name": "@mtth/stl-errors",
+  "version": "0.0.0",
+  "repository": "github:mtth/sdk.ts",
+  "description": "Standard errors",
+  "keywords": [
+    "stl"
+  ],
+  "author": "Matthieu Monsch <mtth@apache.org>",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "lib/",
+    "resources/"
+  ],
+  "exports": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "scripts": {
+    "build": "tsc -p src",
+    "clean": "rm -rf lib node_modules out",
+    "fix": "prettier --write",
+    "prepare": "pnpm run build",
+    "test": "vitest",
+    "watch": "tsc -b -w src test"
+  },
+  "dependencies": {
+    "change-case": "^5.4.4"
+  }
+}

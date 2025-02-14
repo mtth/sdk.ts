@@ -1,0 +1,17 @@
+$id: resource://mtth@stl-errors/schemas/error-status.yaml
+type: string
+enum:
+  - UNKNOWN
+  - INTERNAL
+  - UNIMPLEMENTED
+  - UNAVAILABLE
+  - DEADLINE_EXCEEDED
+  - ABORTED
+  - INVALID_ARGUMENT
+  - UNAUTHENTICATED
+  - PERMISSION_DENIED
+  - NOT_FOUND
+  - ALREADY_EXISTS
+  - FAILED_PRECONDITION
+  - RESOURCE_EXHAUSTED
+  - CANCELLED

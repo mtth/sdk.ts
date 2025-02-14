@@ -7,8 +7,31 @@
   "license": "UNLICENSED",
   "type": "module",
   "scripts": {
-    "clean": "rm -rf node_modules",
-    "lint": "true",
-    "test": "true"
-  }
+    "clean": "pnpm -r -F !. run clean && rm -rf docs node_modules out",
+    "fix": "prettier --write 'packages/*/{src,test}/**/*.{ts,tsx}' && pnpm run lint --fix",
+    "lint": "eslint 'packages/*/{src,test}/**/*.{ts,tsx}'",
+    "test": "pnpm -r run test run --coverage"
+  },
+  "devDependencies": {
+    "@mtth/eslint-plugin": "workspace:*",
+    "@mtth/prettier-typescript": "workspace:*",
+    "@mtth/tsconfig": "workspace:*",
+    "@types/node": "^18.19.64",
+    "@vitest/coverage-v8": "^2.1.5",
+    "eslint": "^9.15.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3",
+    "ts-essentials": "^10.0.3",
+    "typedoc": "^0.26.11",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.5"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  },
+  "prettier": "@mtth/prettier-typescript"
 }

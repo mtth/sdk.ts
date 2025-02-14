@@ -19,6 +19,8 @@ jobs:
     name: Publish packages to NPM
     needs: tag
     if: needs.tag.outputs.new-version != ''
+    permissions:
+      packages: write
     uses: ./.github/workflows/publish-packages.yaml
     secrets: inherit
     with:

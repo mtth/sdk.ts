@@ -7,6 +7,6 @@
     "prettier"
   ],
   "author": "Matthieu Monsch <mtth@apache.org>",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "main": "index.json"
 }

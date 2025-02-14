@@ -1,0 +1,12 @@
+{
+  "name": "@mtth/prettier-typescript",
+  "version": "0.0.0",
+  "repository": "github:mtth/standards.ts",
+  "description": "Shared prettier config for TypeScript",
+  "keywords": [
+    "prettier"
+  ],
+  "author": "Matthieu Monsch <mtth@apache.org>",
+  "license": "Apache-2.0",
+  "main": "index.json"
+}

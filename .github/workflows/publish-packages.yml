@@ -1,0 +1,48 @@
+name: Publish packages
+on:
+  workflow_call:
+    inputs:
+      version:
+        required: true
+        type: string
+      registry:
+        required: false
+        type: string # gpr or npm
+        default: gpr
+      publish-command:
+        required: false
+        type: string
+        default: pnpm -r exec pnpm publish
+      setup-protoc:
+        required: false
+        type: boolean
+        default: true
+      timeout-minutes:
+        required: false
+        type: number
+        default: 2
+jobs:
+  publish:
+    name: Publish
+    timeout-minutes: ${{ inputs.timeout-minutes }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+      - name: Set up
+        uses: mtth/sdk.ts/.github/actions/setup@main
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          node-auth-token: ${{ secrets.GPR_RO_TOKEN }}
+          setup-protoc: ${{ inputs.setup-protoc }}
+          registry-url: ${{ inputs.registry == 'npm' && 'https://registry.npmjs.org' || 'https://npm.pkg.github.com' }}
+          ignore-scripts: true
+      - name: Set version
+        run: pnpm -r exec pnpm version ${{ inputs.version }}
+      - name: Publish
+        run: ${{ inputs.publish-command }} --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ inputs.registry == 'npm' && secrets.NPM_TOKEN || secrets.GCR_RW_TOKEN }}

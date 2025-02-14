@@ -1,0 +1,41 @@
+name: Setup
+inputs:
+  github-token:
+    required: true
+  node-auth-token:
+    required: true
+  registry-url:
+    required: false
+    default: https://npm.pkg.github.com
+  ignore-scripts:
+    required: false
+    default: 'false'
+  setup-protoc:
+    required: false
+    default: 'true'
+runs:
+  using: composite
+  steps:
+    - name: Set up pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 9
+    - name: Set up Node
+      uses: actions/setup-node@v4
+      with:
+        cache: pnpm
+        registry-url: ${{ inputs.registry-url }}
+    - name: Setup protoc
+      if: inputs.setup-protoc == 'true'
+      uses: arduino/setup-protoc@v3
+      with:
+        repo-token: ${{ inputs.github-token }}
+    - name: Install
+      shell: bash
+      run: pnpm install --ignore-scripts
+      env:
+        NODE_AUTH_TOKEN: ${{ inputs.node-auth-token }}
+    - name: Build
+      if: inputs.ignore-scripts == 'false'
+      shell: bash
+      run: pnpm rebuild -r

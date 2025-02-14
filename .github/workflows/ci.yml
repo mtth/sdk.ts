@@ -6,11 +6,15 @@ on:
     paths-ignore:
       - '**.md'
 jobs:
+  test:
+    name: Test
+    uses: ./.github/workflows/test.yml
   tag:
     name: Tag
-    uses: ./.github/workflows/test.yml
-    with:
-      bump-version: true
+    needs: test
+    permissions:
+      contents: write
+    uses: ./.github/workflows/tag.yml
   publish-npm:
     name: Publish packages to NPM
     needs: tag

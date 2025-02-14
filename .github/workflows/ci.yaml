@@ -8,18 +8,18 @@ on:
 jobs:
   test:
     name: Test
-    uses: ./.github/workflows/test.yml
+    uses: ./.github/workflows/test.yaml
   tag:
     name: Tag
     needs: test
     permissions:
       contents: write
-    uses: ./.github/workflows/tag.yml
+    uses: ./.github/workflows/tag.yaml
   publish-npm:
     name: Publish packages to NPM
     needs: tag
     if: needs.tag.outputs.new-version != ''
-    uses: ./.github/workflows/publish-packages.yml
+    uses: ./.github/workflows/publish-packages.yaml
     secrets: inherit
     with:
       version: ${{ needs.tag.outputs.new-version }}

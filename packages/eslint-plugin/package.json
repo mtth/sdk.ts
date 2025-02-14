@@ -7,7 +7,7 @@
     "eslint"
   ],
   "author": "Matthieu Monsch <mtth@apache.org>",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "type": "module",
   "exports": "./index.js",
   "dependencies": {

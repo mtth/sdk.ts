@@ -8,6 +8,8 @@ on:
 jobs:
   tag:
     name: Tag
+    permissions:
+      contents: write
     uses: ./.github/workflows/test.yml
     with:
       bump-version: true

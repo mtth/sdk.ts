@@ -1,0 +1,23 @@
+name: CI
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+jobs:
+  tag:
+    name: Tag
+    uses: ./.github/workflows/test.yml
+    with:
+      bump-version: true
+  publish-npm:
+    name: Publish packages to NPM
+    needs: tag
+    if: needs.tag.outputs.new-version != ''
+    uses: ./.github/workflows/publish-packages.yml
+    secrets: inherit
+    with:
+      version: ${{ needs.tag.outputs.new-version }}
+      registry: npm
+      publish-command: pnpm -r exec pnpm publish --access public

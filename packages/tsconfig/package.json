@@ -1,0 +1,11 @@
+{
+  "name": "@mtth/tsconfig",
+  "version": "0.0.0",
+  "repository": "github:mtth/sdk.ts",
+  "description": "Shared TypeScript config",
+  "keywords": [
+    "tsconfig"
+  ],
+  "author": "Matthieu Monsch <mtth@apache.org>",
+  "license": "Apache-2.0"
+}

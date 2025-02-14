@@ -1,0 +1,14 @@
+{
+  "name": "sdk.ts",
+  "version": "0.0.0",
+  "private": true,
+  "repository": "github:mtth/sdk.ts",
+  "author": "Matthieu Monsch <mtth@apache.org>",
+  "license": "UNLICENSED",
+  "type": "module",
+  "scripts": {
+    "clean": "rm -rf node_modules",
+    "lint": "true",
+    "test": "true"
+  }
+}

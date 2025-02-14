@@ -1,0 +1,11 @@
+$id: resource://mtth@stl-errors/schemas/failure.yaml
+type: object
+required:
+  - status
+  - error
+additionalProperties: false
+properties:
+  status:
+    $ref: error-status.yaml
+  error:
+    $ref: error.yaml

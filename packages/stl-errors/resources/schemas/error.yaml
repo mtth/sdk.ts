@@ -1,0 +1,13 @@
+$id: resource://mtth@stl-errors/schemas/error.yaml
+type: object
+required:
+  - message
+additionalProperties: false
+properties:
+  message:
+    type: string
+  code:
+    type: string
+  tags:
+    type: object
+    additionalProperties: true

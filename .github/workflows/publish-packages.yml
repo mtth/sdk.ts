@@ -16,7 +16,7 @@ on:
       setup-protoc:
         required: false
         type: boolean
-        default: true
+        default: false
       timeout-minutes:
         required: false
         type: number

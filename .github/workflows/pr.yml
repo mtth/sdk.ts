@@ -9,5 +9,3 @@ jobs:
   test:
     name: Test
     uses: ./.github/workflows/test.yml
-    with:
-      setup-protoc: false

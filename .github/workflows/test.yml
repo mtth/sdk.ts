@@ -17,7 +17,7 @@ on:
       setup-protoc:
         required: false
         type: boolean
-        default: true
+        default: false
       services-file:
         required: false
         type: string

@@ -10,6 +10,8 @@ jobs:
   conventional-commit:
     name: Check conventional commit title
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - name: Check title
         uses: ytanikin/pr-conventional-commits@1.4.0

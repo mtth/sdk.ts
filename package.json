@@ -8,8 +8,8 @@
   "type": "module",
   "scripts": {
     "clean": "pnpm -r -F !. run clean && rm -rf docs node_modules out",
-    "fix": "prettier --write 'packages/*/{src,test}/**/*.{ts,tsx}' && pnpm run lint --fix",
-    "lint": "eslint 'packages/*/{src,test}/**/*.{ts,tsx}'",
+    "fix": "prettier --write 'packages/**/{src,test}/**/*.{ts,tsx}' && pnpm run lint --fix",
+    "lint": "eslint 'packages/**/{src,test}/**/*.{ts,tsx}'",
     "test": "pnpm -r run test run --coverage"
   },
   "devDependencies": {

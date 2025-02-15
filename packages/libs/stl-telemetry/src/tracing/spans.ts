@@ -1,7 +1,7 @@
-import * as otel from '@opentelemetry/api';
 import {assert, errorMessage} from '@mtth/stl-errors';
 import {EventProducer} from '@mtth/stl-utils/events';
 import {isIntensive} from '@mtth/stl-utils/intensive';
+import * as otel from '@opentelemetry/api';
 import {AsyncOrSync} from 'ts-essentials';
 
 /**

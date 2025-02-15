@@ -1,7 +1,7 @@
-import resources from '@opentelemetry/resources';
 import {assert} from '@mtth/stl-errors';
 import {isExplicitVersion, LibInfo} from '@mtth/stl-telemetry';
 import {ProcessEnv} from '@mtth/stl-utils/environment';
+import resources from '@opentelemetry/resources';
 import {Writable} from 'ts-essentials';
 
 /**

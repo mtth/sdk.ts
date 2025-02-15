@@ -1,11 +1,8 @@
-import * as otel from '@opentelemetry/api';
 import {running} from '@mtth/stl-utils/environment';
 import {EventProducer} from '@mtth/stl-utils/events';
 import {ifPresent} from '@mtth/stl-utils/functions';
-import {
-  PrettyFormatter,
-  PrettyFormatterOptions,
-} from '@mtth/stl-utils/objects';
+import {PrettyFormatter, PrettyFormatterOptions} from '@mtth/stl-utils/objects';
+import * as otel from '@opentelemetry/api';
 import {
   default as pinoLogger_,
   destination,

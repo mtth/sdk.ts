@@ -28,11 +28,8 @@ const [errors, errorCodes] = errorFactories({
 
 export {errorCodes};
 
-type NodePath<K extends keyof ast.Visitor> = NonNullable<
-  ast.Visitor[K]
-> extends (p: infer P) => any
-  ? P
-  : never;
+type NodePath<K extends keyof ast.Visitor> =
+  NonNullable<ast.Visitor[K]> extends (p: infer P) => any ? P : never;
 
 export type ImportNodePath = NodePath<'visitImportDeclaration'>;
 export type CallNodePath = NodePath<'visitCallExpression'>;

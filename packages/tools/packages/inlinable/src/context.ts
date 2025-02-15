@@ -54,7 +54,10 @@ function enclosing(
 }
 
 class RealEnclosingPackage implements runtime.EnclosingPackage {
-  constructor(readonly root: string, readonly resourceFolder: string) {}
+  constructor(
+    readonly root: string,
+    readonly resourceFolder: string
+  ) {}
 
   metadataPath(): string {
     return path.join(this.root, 'package.json');

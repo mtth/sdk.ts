@@ -1,7 +1,7 @@
-import * as otel from '@opentelemetry/api';
-import {NodeTracerProvider} from '@opentelemetry/sdk-trace-node';
 import {typedEmitter} from '@mtth/stl-utils/events';
 import {intensive} from '@mtth/stl-utils/intensive';
+import * as otel from '@opentelemetry/api';
+import {NodeTracerProvider} from '@opentelemetry/sdk-trace-node';
 import crypto from 'crypto';
 import {setImmediate} from 'timers/promises';
 

@@ -1,5 +1,5 @@
-import * as otel from '@opentelemetry/api';
 import {typedEmitter} from '@mtth/stl-utils/events';
+import * as otel from '@opentelemetry/api';
 import {setTimeout} from 'timers/promises';
 
 import * as sut from '../src/index.js';

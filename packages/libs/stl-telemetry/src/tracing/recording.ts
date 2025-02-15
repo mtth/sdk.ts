@@ -1,7 +1,7 @@
-import * as otel from '@opentelemetry/api';
 import {assert} from '@mtth/stl-errors';
 import {firstElement} from '@mtth/stl-utils/collections';
 import {resolvable} from '@mtth/stl-utils/functions';
+import * as otel from '@opentelemetry/api';
 
 import {LibInfo} from '../common.js';
 

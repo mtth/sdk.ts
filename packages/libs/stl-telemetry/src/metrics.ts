@@ -1,8 +1,8 @@
-import * as otel from '@opentelemetry/api';
 import {absurd, assert, check} from '@mtth/stl-errors';
 import {EventProducer} from '@mtth/stl-utils/events';
 import {Collect, collectable, Effect} from '@mtth/stl-utils/functions';
 import {isDeepEqual} from '@mtth/stl-utils/objects';
+import * as otel from '@opentelemetry/api';
 
 import {LibInfo} from './common.js';
 

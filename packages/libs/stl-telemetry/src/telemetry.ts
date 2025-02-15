@@ -1,5 +1,5 @@
-import * as otel from '@opentelemetry/api';
 import {EventProducer, typedEmitter} from '@mtth/stl-utils/events';
+import * as otel from '@opentelemetry/api';
 
 import {LibInfo} from './common.js';
 import {

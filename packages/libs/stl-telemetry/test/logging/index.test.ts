@@ -1,8 +1,8 @@
+import {errors} from '@mtth/stl-errors';
+import {typedEmitter} from '@mtth/stl-utils/events';
 import * as otel from '@opentelemetry/api';
 import {TraceState} from '@opentelemetry/core';
 import {NodeTracerProvider} from '@opentelemetry/sdk-trace-node';
-import {errors} from '@mtth/stl-errors';
-import {typedEmitter} from '@mtth/stl-utils/events';
 import {default as pino_} from 'pino';
 
 import * as sut from '../../src/logging/index.js';

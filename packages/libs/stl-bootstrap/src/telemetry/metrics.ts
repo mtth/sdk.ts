@@ -1,3 +1,9 @@
+import {
+  instrumentsFor,
+  Telemetry,
+  TelemetryListeners,
+} from '@mtth/stl-telemetry';
+import {EventConsumer} from '@mtth/stl-utils/events';
 import exporterPrometheus from '@opentelemetry/exporter-prometheus';
 import {
   Aggregation,
@@ -5,12 +11,6 @@ import {
   MetricReader,
   ResourceMetrics,
 } from '@opentelemetry/sdk-metrics';
-import {
-  instrumentsFor,
-  Telemetry,
-  TelemetryListeners,
-} from '@mtth/stl-telemetry';
-import {EventConsumer} from '@mtth/stl-utils/events';
 
 const instruments = instrumentsFor({
   collectionErrored: {

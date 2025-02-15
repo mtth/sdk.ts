@@ -1,12 +1,3 @@
-import * as otel from '@opentelemetry/api';
-import contextAsyncHooks from '@opentelemetry/context-async-hooks';
-import core from '@opentelemetry/core';
-import exporterMetricsOtlpHttp from '@opentelemetry/exporter-metrics-otlp-http';
-import exporterTraceOtlpHttp from '@opentelemetry/exporter-trace-otlp-http';
-import resources from '@opentelemetry/resources';
-import sdkMetrics from '@opentelemetry/sdk-metrics';
-import sdkTraceBase from '@opentelemetry/sdk-trace-base';
-import sdkTraceNode from '@opentelemetry/sdk-trace-node';
 import {assert} from '@mtth/stl-errors';
 import {
   InstrumentableTelemetry,
@@ -19,6 +10,15 @@ import {
 } from '@mtth/stl-telemetry';
 import {EventProducer, typedEmitter} from '@mtth/stl-utils/events';
 import {ifPresent} from '@mtth/stl-utils/functions';
+import * as otel from '@opentelemetry/api';
+import contextAsyncHooks from '@opentelemetry/context-async-hooks';
+import core from '@opentelemetry/core';
+import exporterMetricsOtlpHttp from '@opentelemetry/exporter-metrics-otlp-http';
+import exporterTraceOtlpHttp from '@opentelemetry/exporter-trace-otlp-http';
+import resources from '@opentelemetry/resources';
+import sdkMetrics from '@opentelemetry/sdk-metrics';
+import sdkTraceBase from '@opentelemetry/sdk-trace-base';
+import sdkTraceNode from '@opentelemetry/sdk-trace-node';
 
 import {packageInfo} from '../common.js';
 import {appMatchesService, appResourceAttrs} from './common.js';

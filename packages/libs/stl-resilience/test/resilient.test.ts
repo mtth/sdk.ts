@@ -6,8 +6,8 @@ import {NodeTracerProvider} from '@opentelemetry/sdk-trace-node';
 import {Duration} from 'luxon';
 import {setTimeout} from 'timers/promises';
 
-import * as sut from '../src/resilient.js';
 import {deadlinesErrorCodes} from '../src/deadlines/index.js';
+import * as sut from '../src/resilient.js';
 
 const provider = new NodeTracerProvider();
 provider.register();

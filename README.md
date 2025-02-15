@@ -12,6 +12,7 @@ TypeScript.
 * Libraries
   * [`@mtth/stl-bootstrap`](/packages/libs/stl-bootstrap)
   * [`@mtth/stl-errors`](/packages/libs/stl-errors)
+  * [`@mtth/stl-koa`](/packages/libs/stl-koa)
   * [`@mtth/stl-resilience`](/packages/libs/stl-resilience)
   * [`@mtth/stl-settings`](/packages/libs/stl-settings)
   * [`@mtth/stl-telemetry`](/packages/libs/stl-telemetry)

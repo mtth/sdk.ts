@@ -1,4 +1,6 @@
-import {intensive} from '@mtth/stl-utils/functions';
+#!/usr/bin/env node
+
+import {intensive} from '@mtth/stl-utils/intensive';
 import benchmark from 'benchmark';
 import crypto from 'crypto';
 

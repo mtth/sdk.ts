@@ -31,6 +31,7 @@
     "@opentelemetry/core": "^1.28.0",
     "@opentelemetry/sdk-metrics": "^1.28.0",
     "@mtth/stl-errors": "workspace:*",
+    "@mtth/stl-resilience": "workspace:*",
     "@mtth/stl-settings": "workspace:*",
     "@mtth/stl-telemetry": "workspace:*",
     "@mtth/stl-utils": "workspace:*",

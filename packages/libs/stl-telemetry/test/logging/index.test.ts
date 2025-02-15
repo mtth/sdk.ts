@@ -1,4 +1,4 @@
-import {errors} from '@mtth/stl-errors';
+import {defaultErrors} from '@mtth/stl-errors';
 import {typedEmitter} from '@mtth/stl-utils/events';
 import * as otel from '@opentelemetry/api';
 import {TraceState} from '@opentelemetry/core';
@@ -224,7 +224,7 @@ describe('logger provider', () => {
       const log = p.logger({name: 't8'});
       const boom = new Error('Boom');
       log.info({err: boom}, 'm1');
-      log.info({err: errors.internal({message: 'hey', cause: boom})}, 'm2');
+      log.info({err: defaultErrors.internal({message: 'hey', cause: boom})}, 'm2');
       log.info({err: new Error('Bang')}, 'm3');
     });
     expect(arr).toMatchObject([

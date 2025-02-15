@@ -6,7 +6,8 @@ import {NodeTracerProvider} from '@opentelemetry/sdk-trace-node';
 import {Duration} from 'luxon';
 import {setTimeout} from 'timers/promises';
 
-import * as sut from '../../src/resilience/index.js';
+import * as sut from '../src/resilient.js';
+import {deadlinesErrorCodes} from '../src/deadlines/index.js';
 
 const provider = new NodeTracerProvider();
 provider.register();
@@ -139,7 +140,7 @@ describe('resilience', () => {
             cb(null);
           }
         })
-        .retryingCodes(sut.deadlinesErrorCodes.DeadlineExceeded)
+        .retryingCodes(deadlinesErrorCodes.DeadlineExceeded)
         .run({telemetry});
       fail();
     } catch (err) {

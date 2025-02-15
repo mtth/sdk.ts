@@ -29,8 +29,7 @@ import events from 'events';
 import {Duration} from 'luxon';
 import pRetry, {Options as PRetryOptions} from 'p-retry';
 
-import {packageInfo} from '../common.js';
-import {durationSetting} from '../time.js';
+import {packageInfo} from './common.js';
 import {
   activeDeadline,
   Deadline,
@@ -41,9 +40,7 @@ import {
   RaceState,
   TimeoutLike,
 } from './deadlines/index.js';
-
-export * from './deadlines/index.js';
-export * from './signals.js';
+import {durationSetting} from './time.js';
 
 export const resilienceErrorCodes = deadlinesErrorCodes;
 

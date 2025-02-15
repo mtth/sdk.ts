@@ -1,4 +1,4 @@
-import * as sut from '../../src/resilience/signals.js';
+import * as sut from '../src/common.js';
 
 describe('first aborted', () => {
   test('returns nothing on empty array', () => {

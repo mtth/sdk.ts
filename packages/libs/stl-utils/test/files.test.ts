@@ -1,3 +1,5 @@
+import {check, fail} from '@mtth/stl-errors';
+import {stat} from 'fs/promises';
 import path from 'path';
 import url from 'url';
 
@@ -164,13 +166,13 @@ describe('with temp dir', () => {
   });
 
   async function expectIsDir(fp: string): Promise<void> {
-    const s = await fs.stat(fp);
+    const s = await stat(fp);
     expect(s.isDirectory()).toBe(true);
   }
 
   async function expectIsAbsent(fp: string): Promise<void> {
     try {
-      await fs.stat(fp);
+      await stat(fp);
       fail();
     } catch (err) {
       expect(err.code).toBe('ENOENT');

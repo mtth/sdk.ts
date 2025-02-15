@@ -1,7 +1,8 @@
-import {assert, unexpected} from '@mtth/stl-errors';
+import {assert, assertType, unexpected} from '@mtth/stl-errors';
 import fs from 'fs';
-import {readFile} from 'fs/promises';
+import {mkdtemp, readFile, rm} from 'fs/promises';
 import {enclosingRoot} from 'inlinable-runtime';
+import os from 'os';
 import path from 'path';
 import url from 'url';
 
@@ -257,7 +258,7 @@ export async function withTempDir<V>(
     fn = arg1;
   }
   const prefix = opts.prefix ?? defaultPrefix();
-  const dp = await fs.mkdtemp(prefix);
+  const dp = await mkdtemp(prefix);
 
   let shouldKeep = false;
   const keep = (): void => {
@@ -269,7 +270,7 @@ export async function withTempDir<V>(
     ret = await fn(dp, keep);
   } finally {
     if (!shouldKeep) {
-      await fs.rm(dp, {recursive: true});
+      await rm(dp, {recursive: true});
     }
   }
   return ret;
@@ -278,4 +279,3 @@ export async function withTempDir<V>(
 function defaultPrefix(): string {
   return path.join(os.tmpdir(), 'stl-');
 }
-

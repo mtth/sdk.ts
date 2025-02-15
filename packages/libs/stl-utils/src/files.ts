@@ -1,7 +1,8 @@
-import {assert, unexpected} from '@mtth/stl-errors';
+import {assert, assertType, unexpected} from '@mtth/stl-errors';
 import fs from 'fs';
-import {readFile} from 'fs/promises';
+import {mkdtemp, readFile, rm} from 'fs/promises';
 import {enclosingRoot} from 'inlinable-runtime';
+import os from 'os';
 import path from 'path';
 import url from 'url';
 
@@ -222,4 +223,59 @@ export class ResourceLoader {
     const contents = await readFile(lu, 'utf8');
     return {contents, url: lu};
   }
+}
+
+export interface WithTempDirOptions {
+  readonly prefix?: string;
+}
+
+export type WithTempDirHandler<V> = (
+  dp: string,
+  keep: () => void
+) => Promise<V>;
+
+/**
+ * Runs a handler with a temporary directory. The directory is deleted once the
+ * handler returns.
+ */
+export async function withTempDir<V>(fn: WithTempDirHandler<V>): Promise<V>;
+export async function withTempDir<V>(
+  opts: WithTempDirOptions,
+  fn: WithTempDirHandler<V>
+): Promise<V>;
+export async function withTempDir<V>(
+  arg0: WithTempDirOptions | WithTempDirHandler<V>,
+  arg1?: WithTempDirHandler<V>
+): Promise<V> {
+  let opts: WithTempDirOptions;
+  let fn: WithTempDirHandler<V>;
+  if (typeof arg0 == 'function') {
+    opts = {};
+    fn = arg0;
+  } else {
+    assertType('function', arg1);
+    opts = arg0;
+    fn = arg1;
+  }
+  const prefix = opts.prefix ?? defaultPrefix();
+  const dp = await mkdtemp(prefix);
+
+  let shouldKeep = false;
+  const keep = (): void => {
+    shouldKeep = true;
+  };
+
+  let ret;
+  try {
+    ret = await fn(dp, keep);
+  } finally {
+    if (!shouldKeep) {
+      await rm(dp, {recursive: true});
+    }
+  }
+  return ret;
+}
+
+function defaultPrefix(): string {
+  return path.join(os.tmpdir(), 'stl-');
 }

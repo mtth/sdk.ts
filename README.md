@@ -1,4 +1,4 @@
-# TypeScript development toolkit
+# TypeScript development toolkit [![CI](https://github.com/mtth/sdk.ts/actions/workflows/ci.yaml/badge.svg)](https://github.com/mtth/sdk.ts/actions/workflows/ci.yaml)
 
 ## NPM Packages
 

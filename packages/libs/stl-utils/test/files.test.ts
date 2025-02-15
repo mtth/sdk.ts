@@ -109,3 +109,71 @@ describe('resource loader', () => {
     ]);
   });
 });
+
+describe('with temp dir', () => {
+  test('simple', async () => {
+    let dp: string | undefined;
+    const ret = await sut.withTempDir(async (dp_) => {
+      expectIsDir(dp_);
+      dp = dp_;
+      return 3;
+    });
+    expectIsAbsent(check.isPresent(dp));
+    expect(ret).toBe(3);
+  });
+
+  test('simple throw', async () => {
+    let dp: string | undefined;
+    try {
+      await sut.withTempDir(async (dp_) => {
+        expectIsDir(dp_);
+        dp = dp_;
+        throw new Error('boom');
+      });
+      fail();
+    } catch (err) {
+      expect(err.message).toBe('boom');
+      expectIsAbsent(check.isPresent(dp));
+    }
+  });
+
+  test('keep on ok', async () => {
+    let dp: string | undefined;
+    await sut.withTempDir({}, async (dp_, keep) => {
+      expectIsDir(dp_);
+      keep();
+      dp = dp_;
+    });
+    expectIsDir(check.isPresent(dp));
+  });
+
+  test('keep on throw', async () => {
+    let dp: string | undefined;
+    try {
+      await sut.withTempDir(async (dp_, keep) => {
+        expectIsDir(dp_);
+        keep();
+        dp = dp_;
+        throw new Error('boom');
+      });
+      fail();
+    } catch (err) {
+      expect(err.message).toBe('boom');
+      expectIsDir(check.isPresent(dp));
+    }
+  });
+
+  async function expectIsDir(fp: string): Promise<void> {
+    const s = await fs.stat(fp);
+    expect(s.isDirectory()).toBe(true);
+  }
+
+  async function expectIsAbsent(fp: string): Promise<void> {
+    try {
+      await fs.stat(fp);
+      fail();
+    } catch (err) {
+      expect(err.code).toBe('ENOENT');
+    }
+  }
+});

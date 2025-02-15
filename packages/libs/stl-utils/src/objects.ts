@@ -1,4 +1,4 @@
-import {assert, errors, unexpected} from '@mtth/stl-errors';
+import {assert, defaultErrors, unexpected} from '@mtth/stl-errors';
 import fastDeepEqual from 'fast-deep-equal/es6/index.js';
 import {ValueOf} from 'ts-essentials';
 import {default as untruncate_} from 'untruncate-json';
@@ -97,7 +97,7 @@ function freezing<O extends object>(
 }
 
 function frozenObjectError(meth: string, prop: Prop): Error {
-  return errors.illegal({
+  return defaultErrors.illegal({
     message: 'Object is frozen',
     tags: {meth, prop: prop.toString()},
   });

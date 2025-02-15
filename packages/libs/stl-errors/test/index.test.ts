@@ -16,11 +16,11 @@ test('assert cause', () => {
 });
 
 test('assert error code ', () => {
-  sut.assertErrorCode(sut.errorCodes.Illegal, sut.errors.illegal());
+  sut.assertErrorCode(sut.errorCodes.Illegal, sut.defaultErrors.illegal());
   expect(() => {
     sut.assertErrorCode(
       sut.errorCodes.Internal,
-      sut.errors.illegal({message: 'bar'})
+      sut.defaultErrors.illegal({message: 'bar'})
     );
   }).toThrowError(/bar/);
 });
@@ -71,7 +71,7 @@ describe('derive failure', () => {
   });
 
   test('raw internal error', () => {
-    expect(sut.deriveFailure(sut.errors.internal())).toEqual({
+    expect(sut.deriveFailure(sut.defaultErrors.internal())).toEqual({
       status: 'UNKNOWN',
       error: {message: 'Unknown error'},
     });
@@ -101,7 +101,7 @@ describe('derive failure', () => {
   test('nested status error with message', () => {
     const cause = errors.foo({message: 'Hello'});
     const err1 = sut.statusErrors.failedPrecondition(cause);
-    const err2 = sut.errors.internal({message: 'Boom', cause: err1});
+    const err2 = sut.defaultErrors.internal({message: 'Boom', cause: err1});
     expect(sut.deriveFailure(err2)).toEqual({
       status: 'FAILED_PRECONDITION',
       error: {

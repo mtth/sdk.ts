@@ -1,4 +1,4 @@
-import {assert, check, errors} from '@mtth/stl-errors';
+import {assert, check, defaultErrors} from '@mtth/stl-errors';
 import http from 'http';
 import net from 'net';
 
@@ -32,7 +32,7 @@ export class Host {
     try {
       base = new URL(PLACEHOLDER_PROTOCOL + arg);
     } catch (cause) {
-      throw errors.invalid({
+      throw defaultErrors.invalid({
         message: `Invalid service host: ${arg}`,
         tags: {arg},
         cause,

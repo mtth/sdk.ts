@@ -34,6 +34,7 @@ export {
 export {errorMessage} from './common.js';
 export {
   CoercedError,
+  errors as defaultErrors,
   errorCode,
   errorCodes,
   ErrorCodesFor,
@@ -41,7 +42,6 @@ export {
   ErrorFactoriesFor,
   ErrorFactoriesParams,
   ErrorFactory,
-  errors,
   isStandardError,
   mergeErrorCodes,
   newError,

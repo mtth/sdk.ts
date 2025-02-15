@@ -1,4 +1,4 @@
-import {assert, errors} from '@mtth/stl-errors';
+import {assert, defaultErrors} from '@mtth/stl-errors';
 import picomatch from 'picomatch';
 
 /** Upper-cases the first character of the string if not empty. */
@@ -23,7 +23,7 @@ export function parseBoolean(s: string): boolean {
     case 'false':
       return false;
     default:
-      throw errors.invalid({message: `Invalid boolean string: ${s}`});
+      throw defaultErrors.invalid({message: `Invalid boolean string: ${s}`});
   }
 }
 

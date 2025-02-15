@@ -8,6 +8,7 @@
 * Libraries
   * [`@mtth/stl-bootstrap`](/packages/libs/stl-bootstrap)
   * [`@mtth/stl-errors`](/packages/libs/stl-errors)
+  * [`@mtth/stl-resilience`](/packages/libs/stl-resilience)
   * [`@mtth/stl-settings`](/packages/libs/stl-settings)
   * [`@mtth/stl-telemetry`](/packages/libs/stl-telemetry)
   * [`@mtth/stl-utils`](/packages/libs/stl-utils)

@@ -1,6 +1,6 @@
 /** Opaque type utilities. */
 
-import {errors} from '@mtth/stl-errors';
+import {defaultErrors} from '@mtth/stl-errors';
 import {kebabCase} from 'change-case';
 import {Opaque} from 'ts-essentials';
 
@@ -18,14 +18,14 @@ const DEFAULT_MAX_SLUG_LENGTH = 64;
  */
 export function newSlug(arg: string, maxLength?: number): Slug {
   if (!arg?.length) {
-    throw errors.invalid({
+    throw defaultErrors.invalid({
       message: `Slug ${arg} is empty or undefined`,
       tags: {arg},
     });
   }
   const length = maxLength ?? DEFAULT_MAX_SLUG_LENGTH;
   if (arg.length > length) {
-    throw errors.invalid({
+    throw defaultErrors.invalid({
       message:
         `Slug ${arg} is too long: its length (${arg.length}) is ` +
         `greater than the allowed limit ${length}`,
@@ -34,14 +34,14 @@ export function newSlug(arg: string, maxLength?: number): Slug {
   }
   const name = arg.startsWith('.') ? arg.slice(1) : arg;
   if (!slugFirstCharRegexp.test(name.charAt(0))) {
-    throw errors.invalid({
+    throw defaultErrors.invalid({
       message: `Slug ${arg} does not start with a lower-case ASCII char`,
       tags: {arg},
     });
   }
   const parts = name.split('-');
   if (!parts.every((s) => slugPartRegexp.test(s))) {
-    throw errors.invalid({
+    throw defaultErrors.invalid({
       message:
         `Slug ${arg} is not a dash-separated sequence of ` + slugPartRegexp,
       tags: {arg},
@@ -81,7 +81,10 @@ const uuidRegexp =
  */
 export function newUuid(arg: string): Uuid {
   if (!isUuid(arg)) {
-    throw errors.invalid({message: `${arg} is not a valid UUID`, tags: {arg}});
+    throw defaultErrors.invalid({
+      message: `${arg} is not a valid UUID`,
+      tags: {arg},
+    });
   }
   return arg;
 }

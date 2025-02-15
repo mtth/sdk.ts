@@ -1,0 +1,45 @@
+{
+  "name": "@mtth/stl-resilience",
+  "version": "0.0.0",
+  "repository": "github:mtth/sdk.ts",
+  "description": "Standard library",
+  "keywords": [
+    "resilience",
+    "stl"
+  ],
+  "author": "Matthieu Monsch <mtth@apache.org>",
+  "license": "UNLICENSED",
+  "type": "module",
+  "browser": "lib/index.browser.js",
+  "files": [
+    "lib/"
+  ],
+  "exports": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "scripts": {
+    "build": "tsc -p src",
+    "clean": "rm -rf lib node_modules out",
+    "fix": "prettier --write",
+    "prepare": "pnpm run build && inlinable r",
+    "test": "vitest",
+    "watch": "tsc -b -w src test"
+  },
+  "dependencies": {
+    "@opentelemetry/resources": "^1.28.0",
+    "@mtth/stl-errors": "workspace:*",
+    "@mtth/stl-settings": "workspace:*",
+    "@mtth/stl-telemetry": "workspace:*",
+    "@mtth/stl-utils": "workspace:*",
+    "luxon": "^3.5.0",
+    "p-retry": "^6.2.1"
+  },
+  "peerDependencies": {
+    "@opentelemetry/api": "~1.9.0"
+  },
+  "devDependencies": {
+    "@opentelemetry/api": "~1.9.0",
+    "@opentelemetry/sdk-trace-node": "^1.28.0",
+    "@types/luxon": "^3.4.2",
+    "inlinable": "workspace:*"
+  }
+}

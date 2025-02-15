@@ -17,3 +17,29 @@
   * [`@mtth/eslint-plugin`](/packages/configs/eslint-plugin)
   * [`@mtth/prettier-typescript`](/packages/configs/prettier-typescript)
   * [`@mtth/tsconfig`](/packages/configs/tsconfig)
+
+```mermaid
+flowchart TD
+  stl-errors --> stl-bootstrap
+  stl-telemetry --> stl-bootstrap
+  stl-utils --> stl-bootstrap
+
+  stl-errors --> stl-koa
+  stl-resilience --> stl-koa
+  stl-settings --> stl-koa
+  stl-telemetry --> stl-koa
+  stl-utils --> stl-koa
+
+  stl-errors --> stl-resilience
+  stl-settings --> stl-resilience
+  stl-telemetry --> stl-resilience
+  stl-utils --> stl-resilience
+
+  stl-errors --> stl-settings
+  stl-utils --> stl-settings
+
+  stl-errors --> stl-telemetry
+  stl-utils --> stl-telemetry
+
+  stl-errors --> stl-utils
+```

@@ -63,7 +63,7 @@ describe('resource loader', () => {
         .scopedToDependency('@mtth/stl-errors')
         .localUrl('schemas/error.yaml');
     expect(lu).toMatch(
-      /\/packages\/stl-errors\/resources\/schemas\/error\.yaml/
+      /\/packages\/libs\/stl-errors\/resources\/schemas\/error\.yaml/
     );
   });
 
@@ -81,7 +81,7 @@ describe('resource loader', () => {
 
   test('scoped to dependency', () => {
     const outer = loader.scopedToDependency('@mtth/stl-errors');
-    expect(outer.rootPath).toMatch(/\/packages\/stl-errors\/$/);
+    expect(outer.rootPath).toMatch(/\/packages\/libs\/stl-errors\/$/);
     const inner = outer.scopedToDependency('change-case');
     expect(inner.rootPath).toMatch(
       /\/node_modules\/\.pnpm\/.*\/change-case\/$/

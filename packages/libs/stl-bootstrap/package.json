@@ -8,7 +8,7 @@
     "stl"
   ],
   "author": "Matthieu Monsch <mtth@apache.org>",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "type": "module",
   "files": [
     "lib/"

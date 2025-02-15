@@ -1,7 +1,7 @@
 {
   "name": "@mtth/prettier-typescript",
   "version": "0.0.0",
-  "repository": "github:mtth/standards.ts",
+  "repository": "github:mtth/sdk.ts",
   "description": "Shared prettier config for TypeScript",
   "keywords": [
     "prettier"

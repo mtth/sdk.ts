@@ -9,7 +9,7 @@ import {
   statusFromHttpCode,
   statusToHttpCode,
 } from '@mtth/stl-errors';
-import {resilient,ResilientAttempt} from '@mtth/stl-resilience';
+import {resilient, ResilientAttempt} from '@mtth/stl-resilience';
 import {
   instrumentsFor,
   LogValues,

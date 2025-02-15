@@ -81,7 +81,10 @@ const uuidRegexp =
  */
 export function newUuid(arg: string): Uuid {
   if (!isUuid(arg)) {
-    throw defaultErrors.invalid({message: `${arg} is not a valid UUID`, tags: {arg}});
+    throw defaultErrors.invalid({
+      message: `${arg} is not a valid UUID`,
+      tags: {arg},
+    });
   }
   return arg;
 }

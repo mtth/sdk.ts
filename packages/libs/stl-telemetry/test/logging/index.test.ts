@@ -224,7 +224,10 @@ describe('logger provider', () => {
       const log = p.logger({name: 't8'});
       const boom = new Error('Boom');
       log.info({err: boom}, 'm1');
-      log.info({err: defaultErrors.internal({message: 'hey', cause: boom})}, 'm2');
+      log.info(
+        {err: defaultErrors.internal({message: 'hey', cause: boom})},
+        'm2'
+      );
       log.info({err: new Error('Bang')}, 'm3');
     });
     expect(arr).toMatchObject([

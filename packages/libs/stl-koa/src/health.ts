@@ -8,7 +8,7 @@ import {
   HealthReporter,
   HealthStatus,
 } from '@mtth/stl-resilience';
-import {LibInfo,Telemetry} from '@mtth/stl-telemetry';
+import {LibInfo, Telemetry} from '@mtth/stl-telemetry';
 import {ifPresent} from '@mtth/stl-utils/functions';
 import Koa from 'koa';
 import compose from 'koa-compose';

@@ -4,6 +4,7 @@
   "repository": "github:mtth/sdk.ts",
   "description": "Standard library",
   "keywords": [
+    "resilience",
     "stl"
   ],
   "author": "Matthieu Monsch <mtth@apache.org>",
@@ -29,11 +30,8 @@
     "@mtth/stl-settings": "workspace:*",
     "@mtth/stl-telemetry": "workspace:*",
     "@mtth/stl-utils": "workspace:*",
-    "bytes-iec": "^3.1.1",
-    "change-case": "^5.4.4",
     "luxon": "^3.5.0",
-    "p-retry": "^6.2.1",
-    "yaml": "^2.6.1"
+    "p-retry": "^6.2.1"
   },
   "peerDependencies": {
     "@opentelemetry/api": "~1.9.0"

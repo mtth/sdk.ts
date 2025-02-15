@@ -1,4 +1,4 @@
-import {assert, errorCodes, defaultErrors, fail} from '@mtth/stl-errors';
+import {assert, defaultErrors, errorCodes, fail} from '@mtth/stl-errors';
 import {settingsProvider} from '@mtth/stl-settings';
 import {RecordingTelemetry} from '@mtth/stl-telemetry';
 import {resolvable} from '@mtth/stl-utils/functions';

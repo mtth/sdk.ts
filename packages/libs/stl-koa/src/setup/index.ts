@@ -1,6 +1,24 @@
+import {
+  assert,
+  extractStatusError,
+  Failure,
+  failure,
+  isInternalProblem,
+  isStandardError,
+  StandardError,
+  statusFromHttpCode,
+  statusToHttpCode,
+} from '@mtth/stl-errors';
+import {
+  instrumentsFor,
+  LogValues,
+  recordErrorOnSpan,
+  settingLogLevel,
+  Telemetry,
+} from '@mtth/stl-telemetry';
+import {please} from '@mtth/stl-utils/strings';
 import * as otel from '@opentelemetry/api';
 import core from '@opentelemetry/core';
-import * as stl from '@opvious/stl';
 import http from 'http';
 import Koa from 'koa';
 import {DateTime} from 'luxon';
@@ -21,7 +39,7 @@ import {requestOptions} from './options.js';
 export * from './connecting-ip.js';
 export * from './failures.js';
 
-const instruments = stl.instrumentsFor({
+const instruments = instrumentsFor({
   abortedRequests: {
     name: 'http.server.aborted_requests',
     kind: 'counter',
@@ -53,7 +71,7 @@ const instruments = stl.instrumentsFor({
 });
 
 // Response header containing the trace ID.
-export const TRACE_HEADER = 'opvious-trace';
+export const TRACE_HEADER = 'mtth-trace';
 
 const DEFAULT_UNKNOWN_ERROR_REMEDIATION = 'try again later';
 
@@ -67,7 +85,7 @@ const DEFAULT_UNKNOWN_ERROR_REMEDIATION = 'try again later';
  */
 export function setup<S = any>(args: {
   /** Telemetry instance to report internal metrics. */
-  readonly telemetry: stl.Telemetry;
+  readonly telemetry: Telemetry;
   /**
    * Custom route matcher to use in addition with the standard koa-router based
    * one. The returned route is useful for telemetry (for example as `target`
@@ -105,7 +123,7 @@ export function setup<S = any>(args: {
 
   const propagators = new Map<string, FailurePropagator>();
   for (const p of args.failurePropagators ?? []) {
-    stl.assert(!propagators.has(p.code), 'Duplicate propagator: %s', p.code);
+    assert(!propagators.has(p.code), 'Duplicate propagator: %s', p.code);
     propagators.set(p.code, p);
   }
 
@@ -132,7 +150,7 @@ export function setup<S = any>(args: {
         ctx.set(TRACE_HEADER, sctx.traceId);
       }
       if (ropts.debug) {
-        sctx.traceState = stl.settingLogLevel(
+        sctx.traceState = settingLogLevel(
           sctx.traceState ?? new core.TraceState(),
           'debug'
         );
@@ -191,12 +209,12 @@ export function setup<S = any>(args: {
         method,
         ctx.path
       );
-      const logv: stl.LogValues = Object.create(null);
+      const logv: LogValues = Object.create(null);
       try {
         await next();
       } catch (err) {
         logv.err = err;
-        stl.recordErrorOnSpan(err, span);
+        recordErrorOnSpan(err, span);
       }
 
       // We delay this step until after the handler has run since we need
@@ -211,17 +229,17 @@ export function setup<S = any>(args: {
         return;
       }
 
-      let fl: stl.Failure | undefined;
+      let fl: Failure | undefined;
       if (logv.err) {
-        const serr = stl.extractStatusError(logv.err);
-        ctx.set('opvious-error-status', serr.status);
+        const serr = extractStatusError(logv.err);
+        ctx.set('mtth-error-status', serr.status);
 
-        let cerr: stl.StandardError | undefined;
+        let cerr: StandardError | undefined;
         let annotations: ReadonlyArray<string> | undefined;
-        if (stl.isStandardError(serr.contents)) {
+        if (isStandardError(serr.contents)) {
           cerr = serr.contents;
-          if (!stl.isInternalProblem(serr.status)) {
-            ctx.set('opvious-error-code', cerr.code);
+          if (!isInternalProblem(serr.status)) {
+            ctx.set('mtth-error-code', cerr.code);
           }
           const vals = await Promise.all(annotators.map((a) => a(serr as any)));
           annotations = vals.filter((v) => v);
@@ -231,10 +249,10 @@ export function setup<S = any>(args: {
           serr.status === 'UNKNOWN' &&
           unknownErrorRemediation
         ) {
-          annotations = [stl.please(unknownErrorRemediation)];
+          annotations = [please(unknownErrorRemediation)];
         }
 
-        fl = stl.failure(serr, {annotations});
+        fl = failure(serr, {annotations});
         if (cerr) {
           const propagator = propagators.get(cerr.code);
           propagator?.propagate(fl, ctx, cerr.tags);
@@ -247,7 +265,7 @@ export function setup<S = any>(args: {
         } else {
           ctx.body = fl.error.message;
         }
-        ctx.status = stl.statusToHttpCode(fl.status);
+        ctx.status = statusToHttpCode(fl.status);
       }
       logv.data = {res: ctx.response};
 
@@ -287,7 +305,7 @@ export function setup<S = any>(args: {
       }
 
       setSpanResponseAttributes(span, res);
-      const status = stl.statusFromHttpCode(ctx.status);
+      const status = statusFromHttpCode(ctx.status);
       const latencyMillis = -startedAt.diffNow();
       if (ctx.status < 500) {
         clog.info(
@@ -407,13 +425,13 @@ function setSpanResponseAttributes(
  * manually by the caller.
  */
 function withServerSpan(
-  telemetry: stl.Telemetry,
+  telemetry: Telemetry,
   signal: AbortSignal,
   ctx: Koa.Context,
   connectingIp: (ctx: Koa.Context) => string | undefined,
-  fn: (ra: stl.ResilientAttempt) => Promise<void>
+  fn: (ra: ResilientAttempt) => Promise<void>
 ): Promise<void> {
-  return stl.resilient(serverSpanName(ctx.method), fn).run({
+  return resilient(serverSpanName(ctx.method), fn).run({
     telemetry,
     signals: [signal],
     context: setConnectingIp(

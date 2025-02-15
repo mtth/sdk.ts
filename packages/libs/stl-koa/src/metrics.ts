@@ -1,6 +1,6 @@
 import Router from '@koa/router';
+import {Telemetry} from '@mtth/stl-telemetry';
 import sdkMetrics from '@opentelemetry/sdk-metrics';
-import * as stl from '@opvious/stl';
 import Koa from 'koa';
 import compose from 'koa-compose';
 
@@ -11,7 +11,7 @@ import {packageInfo, StandardEndpoints} from './common.js';
  * metrics.
  */
 export function exposeMetrics(args: {
-  readonly telemetry: stl.Telemetry;
+  readonly telemetry: Telemetry;
   readonly reader: sdkMetrics.MetricReader;
   readonly serializer: (rm: sdkMetrics.ResourceMetrics) => string;
 }): Koa.Middleware {

@@ -1,5 +1,6 @@
-import * as stl from '@opvious/stl';
-import {enableContextPropagation} from '@opvious/stl-bootstrap';
+import {enableContextPropagation} from '@mtth/stl-bootstrap';
+import {defaultErrors, errorFactories, statusErrors} from '@mtth/stl-errors';
+import {RecordingTelemetry} from '@mtth/stl-telemetry';
 import Koa from 'koa';
 import request from 'supertest';
 
@@ -7,12 +8,12 @@ import * as sut from '../../src/setup/index.js';
 
 enableContextPropagation();
 
-const telemetry = stl.RecordingTelemetry.forTesting(
+const telemetry = RecordingTelemetry.forTesting(
   {name: 'test'},
   'silent,test=info'
 );
 
-const [errors, codes] = stl.errorFactories({
+const [errors, codes] = errorFactories({
   prefix: 'ERR_TEST_KOA_',
   definitions: {
     one: {},
@@ -59,14 +60,14 @@ describe('setup', () => {
 
   test('forwards status from wrapped tagged errors', async () => {
     app.use(async () => {
-      throw stl.statusErrors.permissionDenied(
-        stl.errors.internal({message: 'Not this time'})
+      throw statusErrors.permissionDenied(
+        defaultErrors.internal({message: 'Not this time'})
       );
     });
     const data = await request(app.callback()).get('/').expect(403);
     expect(data.headers).toMatchObject({
-      'opvious-error-code': 'ERR_INTERNAL',
-      'opvious-error-status': 'PERMISSION_DENIED',
+      'mtth-error-code': 'ERR_INTERNAL',
+      'mtth-error-status': 'PERMISSION_DENIED',
     });
     expect(data.text).toEqual(
       'Permission denied error [ERR_INTERNAL]: Not this time'
@@ -75,15 +76,15 @@ describe('setup', () => {
 
   test('forwards code from wrapped custom errors', async () => {
     app.use(async () => {
-      throw stl.statusErrors.notFound(errors.one({tags: {yes: '11'}}));
+      throw statusErrors.notFound(errors.one({tags: {yes: '11'}}));
     });
     const data = await request(app.callback())
       .get('/')
       .accept('application/json')
       .expect(404);
     expect(data.headers).toMatchObject({
-      'opvious-error-code': 'ERR_TEST_KOA_ONE',
-      'opvious-error-status': 'NOT_FOUND',
+      'mtth-error-code': 'ERR_TEST_KOA_ONE',
+      'mtth-error-status': 'NOT_FOUND',
     });
     expect(data.body).toEqual({
       status: 'NOT_FOUND',
@@ -97,8 +98,8 @@ describe('setup', () => {
 
   test('forwards information from nested status errors', async () => {
     app.use(async () => {
-      const cause = stl.statusErrors.failedPrecondition(new Error('Boom'));
-      throw stl.errors.internal({message: 'Foo', cause});
+      const cause = statusErrors.failedPrecondition(new Error('Boom'));
+      throw defaultErrors.internal({message: 'Foo', cause});
     });
     const data = await request(app.callback())
       .get('/')
@@ -106,15 +107,15 @@ describe('setup', () => {
       .expect(422);
     expect(data.headers).toMatchObject({
       'content-type': 'text/plain; charset=utf-8',
-      'opvious-error-status': 'FAILED_PRECONDITION',
+      'mtth-error-status': 'FAILED_PRECONDITION',
     });
     expect(data.text).toEqual('Failed precondition error: Boom');
   });
 
   test('includes tags in tagged errors', async () => {
     app.use(async () => {
-      throw stl.statusErrors.invalidArgument(
-        stl.errors.internal({message: 'Boom', tags: {limit: -1}})
+      throw statusErrors.invalidArgument(
+        defaultErrors.internal({message: 'Boom', tags: {limit: -1}})
       );
     });
     const data = await request(app.callback())
@@ -133,7 +134,7 @@ describe('setup', () => {
 
   test('propagates error tags', async () => {
     app.use(async () => {
-      throw stl.statusErrors.invalidArgument(errors.two(123));
+      throw statusErrors.invalidArgument(errors.two(123));
     });
     const data = await request(app.callback()).get('/').expect(400);
     expect(data.headers['x-count']).toEqual('123');
@@ -141,7 +142,7 @@ describe('setup', () => {
 
   test('annotates failures', async () => {
     app.use(async () => {
-      throw stl.statusErrors.resourceExhausted(errors.three());
+      throw statusErrors.resourceExhausted(errors.three());
     });
     const data = await request(app.callback())
       .get('/')
@@ -162,7 +163,7 @@ describe('setup', () => {
     await request(app.callback()).get('/').expect(201);
     await request(app.callback())
       .get('/')
-      .set('opvious-control', 'debug')
+      .set('mtth-control', 'debug')
       .expect(201);
     await request(app.callback()).get('/').expect(201);
     expect(telemetry.logRecords.filter((r) => r.$test)).toMatchObject([

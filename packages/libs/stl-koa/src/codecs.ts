@@ -1,11 +1,11 @@
-import * as stl from '@opvious/stl';
+import {errorFactories, statusErrors} from '@mtth/stl-errors';
 import Koa, {Context as KoaContext} from 'koa';
 import koaCompress from 'koa-compress';
 import rawBody from 'raw-body';
 import stream from 'stream';
 import zlib from 'zlib';
 
-const [errors, codes] = stl.errorFactories({
+const [errors, codes] = errorFactories({
   definitions: {
     decodingInterrupted: (cause: unknown) => ({
       message: 'Request errored during decoding',
@@ -67,7 +67,7 @@ export function decompressedRequestBody(ctx: KoaContext): stream.Readable {
     case 'gzip':
       return pipingDecoder(ctx.req, zlib.createGunzip());
     default:
-      throw stl.statusErrors.invalidArgument(errors.unsupportedEncoding(enc));
+      throw statusErrors.invalidArgument(errors.unsupportedEncoding(enc));
   }
 }
 
@@ -84,7 +84,7 @@ function pipingDecoder(
 
   function onRequestError(cause: unknown): void {
     decoder.removeListener('error', onDecoderError);
-    const err = stl.statusErrors.cancelled(errors.decodingInterrupted(cause));
+    const err = statusErrors.cancelled(errors.decodingInterrupted(cause));
     decoder.unpipe(ret);
     decoder.destroy();
     ret.emit('error', err);
@@ -92,7 +92,7 @@ function pipingDecoder(
 
   function onDecoderError(cause: unknown): void {
     req.removeListener('error', onRequestError);
-    const err = stl.statusErrors.invalidArgument(errors.decodingFailed(cause));
+    const err = statusErrors.invalidArgument(errors.decodingFailed(cause));
     req.destroy(err);
     ret.emit('error', err);
   }

@@ -1,4 +1,13 @@
-import * as stl from '@opvious/stl';
+import {check} from '@mtth/stl-errors';
+import {Telemetry} from '@mtth/stl-telemetry';
+import {
+  Bindable,
+  BindableOptions,
+  HasPort,
+  Host,
+  Port,
+} from '@mtth/stl-utils/bindable';
+import {running} from '@mtth/stl-utils/environment';
 import events from 'events';
 import getPort, {portNumbers} from 'get-port';
 import http from 'http';
@@ -22,13 +31,13 @@ const defaultServerFactory: ServerFactory = (fn) => {
  * A Koa application bound to an HTTP server. When the server is successfully
  * started, the bindable also adds a SIGTERM handler to shut it down gracefully.
  */
-export class AppBindable extends stl.Bindable {
+export class AppBindable extends Bindable {
   private constructor(
     readonly server: http.Server,
-    private readonly telemetry: stl.Telemetry,
-    private readonly port: stl.Port | undefined,
+    private readonly telemetry: Telemetry,
+    private readonly port: Port | undefined,
     private readonly address: string | undefined,
-    opts?: stl.BindableOptions
+    opts?: BindableOptions
   ) {
     super(opts);
     server.on('close', () => void this.unbind());
@@ -39,7 +48,7 @@ export class AppBindable extends stl.Bindable {
     readonly app: Koa<any, any>;
 
     /** Underlying telemetry. */
-    readonly telemetry: stl.Telemetry;
+    readonly telemetry: Telemetry;
 
     /**
      * Defaults to `$APP_PORT` or, if unset:
@@ -60,7 +69,7 @@ export class AppBindable extends stl.Bindable {
     readonly serverFactory?: ServerFactory;
 
     /** Underlying bindable options. */
-    readonly options?: stl.BindableOptions;
+    readonly options?: BindableOptions;
   }): AppBindable {
     const newServer = args.serverFactory ?? defaultServerFactory;
     const server = newServer(args.app.callback());
@@ -73,14 +82,14 @@ export class AppBindable extends stl.Bindable {
     );
   }
 
-  protected override async bind(): Promise<stl.Host & stl.HasPort> {
+  protected override async bind(): Promise<Host & HasPort> {
     const {logger: log} = this.telemetry;
     log.debug('Starting Koa application...');
 
     const {server} = this;
     const addr = this.address ?? DEFAULT_APP_ADDRESS;
     const port = this.port ?? (await defaultAppPort());
-    const target = stl.Host.from(addr, port);
+    const target = Host.from(addr, port);
 
     process.nextTick(() => void server.listen(port, addr));
     await events.once(server, 'listening');
@@ -115,8 +124,8 @@ export const DEFAULT_APP_PORT = 8080;
 export const APP_PORT_EVAR = 'APP_PORT';
 
 /** Convenience application URL factory method. */
-export function appUrl(host: string | stl.Host, opts?: AppUrlOptions): URL {
-  const target = stl.Host.from(host, opts?.fallbackPort ?? DEFAULT_APP_PORT);
+export function appUrl(host: string | Host, opts?: AppUrlOptions): URL {
+  const target = Host.from(host, opts?.fallbackPort ?? DEFAULT_APP_PORT);
   const protocol = opts?.protocol ?? DEFAULT_APP_PROTOCOL;
   const endpoint = opts?.endpoint ?? '/';
   return new URL(`${protocol}${target}${endpoint}`);
@@ -140,9 +149,9 @@ export interface AppUrlOptions {
 export async function defaultAppPort(): Promise<number> {
   const port = process.env[APP_PORT_EVAR];
   if (port !== undefined) {
-    return stl.check.isNonNegativeInteger(+port);
+    return check.isNonNegativeInteger(+port);
   }
-  if (stl.running.inTest()) {
+  if (running.inTest()) {
     return getPort({port: portNumbers(...APP_PORT_TEST_RANGE)});
   }
   return DEFAULT_APP_PORT;

@@ -1,4 +1,5 @@
-import * as stl from '@opvious/stl';
+import {fail} from '@mtth/stl-errors';
+import {noopTelemetry} from '@mtth/stl-telemetry';
 import Koa from 'koa';
 import stream from 'stream';
 import request from 'supertest';
@@ -9,7 +10,7 @@ import * as sut from '../src/streams.js';
 
 const finished = util.promisify(stream.finished);
 
-const telemetry = stl.noopTelemetry();
+const telemetry = noopTelemetry();
 
 function into(arr: unknown[]): stream.Writable {
   return new stream.Writable({
@@ -71,7 +72,7 @@ describe('stream response', () => {
     });
     try {
       await request(app.callback()).get('/').responseType('blob');
-      stl.fail();
+      fail();
     } catch (err: any) {
       expect(err.code).toEqual('ECONNRESET');
     }
@@ -83,7 +84,7 @@ describe('stream response', () => {
     duplex.destroy();
     try {
       sut.streamResponse({} as any, duplex);
-      stl.fail();
+      fail();
     } catch (err: any) {
       expect(err.message).toContain('already destroyed');
     }

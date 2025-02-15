@@ -1,10 +1,11 @@
-import * as stl from '@opvious/stl';
+import {errorFactories} from '@mtth/stl-errors';
+import {noopTelemetry, Telemetry} from '@mtth/stl-telemetry';
 import {ParameterizedContext} from 'koa';
 import stream from 'stream';
 
 import {packageInfo} from './common.js';
 
-const [errors, codes] = stl.errorFactories({
+const [errors, codes] = errorFactories({
   definitions: {
     destroyed: 'Response stream was already destroyed',
     requestAborted: 'Request aborted before the data could be written',
@@ -44,12 +45,12 @@ export function streamRequest(
 export function streamResponse(
   ctx: ParameterizedContext,
   readable: stream.Readable,
-  tel?: stl.Telemetry
+  tel?: Telemetry
 ): void {
   if (readable.destroyed) {
     throw errors.destroyed();
   }
-  const {logger: log} = tel?.via(packageInfo) ?? stl.noopTelemetry();
+  const {logger: log} = tel?.via(packageInfo) ?? noopTelemetry();
   log.debug('Streaming response back to client...');
   // When the body is set to a stream, Koa automatically adds an error handler
   // which prints the error. We suppress it by restoring the original handlers.

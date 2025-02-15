@@ -1,4 +1,4 @@
-import * as stl from '@opvious/stl';
+import {settingsProvider} from '@mtth/stl-settings';
 
 import * as sut from '../../src/throttle/rate.js';
 
@@ -11,7 +11,7 @@ describe('setting', () => {
       {steady: {points: 1, seconds: 10}, burst: {points: 5, seconds: 100}},
     ],
   ])('%j', (src, want) => {
-    const settings = stl.settingsProvider((env) =>
+    const settings = settingsProvider((env) =>
       sut.throttleRateSetting(env.RATE)
     );
     expect(settings({RATE: src})).toEqual(want);

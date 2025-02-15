@@ -1,4 +1,6 @@
-import * as stl from '@opvious/stl';
+import {assertCause,statusErrors, unimplemented} from '@mtth/stl-errors';
+import {instrumentsFor, MetricsFor,Telemetry} from '@mtth/stl-telemetry';
+import {ifPresent} from '@mtth/stl-utils/functions';
 import {DateTime} from 'luxon';
 import {
   IRateLimiterOptions,
@@ -19,16 +21,16 @@ export {
   throttleRateSetting,
 } from './rate.js';
 
-const instruments = stl.instrumentsFor({
+const instruments = instrumentsFor({
   throttleChecks: {
-    name: 'opvious.throttle.checks',
+    name: 'mtth.throttle.checks',
     kind: 'counter',
     unit: '{check}',
     labels: {throttlerId: 'throttler.id', decision: 'decision'},
   },
 });
 
-type Metrics = stl.MetricsFor<typeof instruments>;
+type Metrics = MetricsFor<typeof instruments>;
 
 export type ThrottlingKey = string | false;
 
@@ -56,7 +58,7 @@ export function createThrottle(args: {
   /** Throttle configuration */
   readonly rate: ThrottleRate;
   /** Telemetry instance */
-  readonly telemetry: stl.Telemetry;
+  readonly telemetry: Telemetry;
   /** Distributed state */
   readonly redisClient?: any; // TODO
 }): Throttle {
@@ -70,7 +72,7 @@ export function createThrottle(args: {
 
   let newLimiter: (opts: IRateLimiterOptions) => RateLimiterAbstract;
   if (redisClient) {
-    throw stl.unimplemented();
+    throw unimplemented();
   } else {
     newLimiter = (opts) => new RateLimiterMemory(opts);
   }
@@ -79,7 +81,7 @@ export function createThrottle(args: {
     duration: rate.steady.seconds,
     keyPrefix: `ttt:${id}`,
   });
-  const burstLimiter = stl.ifPresent(rate.burst, (r) =>
+  const burstLimiter = ifPresent(rate.burst, (r) =>
     newLimiter({
       points: r.points,
       duration: r.seconds,
@@ -97,7 +99,7 @@ class InactiveThrottle implements Throttle {
 
 class ActiveThrottle implements Throttle {
   constructor(
-    private readonly telemetry: stl.Telemetry,
+    private readonly telemetry: Telemetry,
     private readonly metrics: Metrics,
     private readonly limiter: RateLimiterAbstract,
     private readonly burstLimiter: RateLimiterAbstract | undefined,
@@ -112,7 +114,7 @@ class ActiveThrottle implements Throttle {
   private error(ms: number, remed?: string): Error {
     this.record('block');
     const err = errors.throttled(DateTime.now().plus(ms), this.reason, remed);
-    return stl.statusErrors.resourceExhausted(err);
+    return statusErrors.resourceExhausted(err);
   }
 
   private eligible(key: ThrottlingKey): key is string {
@@ -126,14 +128,14 @@ class ActiveThrottle implements Throttle {
     try {
       await this.limiter.consume(key, opts?.points);
     } catch (cause) {
-      stl.assertCause(cause instanceof RateLimiterRes, cause);
+      assertCause(cause instanceof RateLimiterRes, cause);
       if (!this.burstLimiter) {
         throw this.error(cause.msBeforeNext, opts?.remediation);
       }
       try {
         await this.burstLimiter.consume(key, opts?.points);
       } catch (burstCause) {
-        stl.assertCause(burstCause instanceof RateLimiterRes, cause);
+        assertCause(burstCause instanceof RateLimiterRes, cause);
         const ms = Math.min(cause.msBeforeNext, burstCause.msBeforeNext);
         throw this.error(ms, opts?.remediation);
       }
@@ -165,6 +167,6 @@ class ActiveThrottle implements Throttle {
 export const throttleFailurePropagator = failurePropagator(
   errorCodes.Throttled,
   (_fl, ctx, tags) => {
-    stl.ifPresent(tags.retryAfter.toHTTP(), (s) => ctx.set('retry-after', s));
+    ifPresent(tags.retryAfter.toHTTP(), (s) => ctx.set('retry-after', s));
   }
 );

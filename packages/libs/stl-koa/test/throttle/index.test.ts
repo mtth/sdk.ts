@@ -1,4 +1,4 @@
-import * as stl from '@opvious/stl';
+import {RecordingTelemetry} from '@mtth/stl-telemetry';
 import rateLimiterFlexible from 'rate-limiter-flexible';
 import {Mocked} from 'vitest';
 
@@ -6,7 +6,7 @@ import * as sut from '../../src/throttle/index.js';
 
 vi.mock('rate-limiter-flexible');
 
-const telemetry = stl.RecordingTelemetry.forTesting();
+const telemetry = RecordingTelemetry.forTesting();
 
 describe('throttle', () => {
   let limiter: Mocked<rateLimiterFlexible.RateLimiterMemory>;

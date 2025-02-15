@@ -6,8 +6,6 @@ export {
   encodeResponseBody,
 } from './codecs.js';
 export {StandardEndpoints} from './common.js';
-export * from './graphql/index.js';
-export * from './health.js';
 export * from './metrics.js';
 export * from './server.js';
 export * from './setup/index.js';

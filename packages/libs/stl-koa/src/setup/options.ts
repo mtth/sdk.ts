@@ -4,7 +4,7 @@ import http from 'http';
 import {Writable} from 'ts-essentials';
 
 // Request header controlling options.
-const OPTIONS_HEADER = 'opvious-control';
+const OPTIONS_HEADER = 'mtth-control';
 
 interface RequestOptions {
   readonly debug?: boolean;

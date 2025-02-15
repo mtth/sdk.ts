@@ -37,13 +37,12 @@
     "@mtth/stl-errors": "workspace:*",
     "change-case": "^5.4.4",
     "fast-deep-equal": "^3.1.3",
-    "inlinable-runtime": "^0.3.4",
+    "inlinable-runtime": "workspace:*",
     "picomatch": "^4.0.2",
     "untruncate-json": "^0.0.1"
   },
   "devDependencies": {
     "@types/picomatch": "^2.3.4",
     "benchmark": "^2.1.4"
-  },
-  "typedocMain": "src/index.ts"
+  }
 }

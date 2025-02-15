@@ -43,7 +43,7 @@
   "devDependencies": {
     "@opentelemetry/api": "~1.9.0",
     "benchmark": "^2.1.4",
-    "inlinable": "^0.3.4",
+    "inlinable": "workspace:*",
     "ts-essentials": "^10.0.3"
   }
 }

@@ -1,0 +1,41 @@
+{
+  "name": "inlinable",
+  "version": "0.0.0",
+  "repository": "github:mtth/sdk.ts",
+  "description": "JavaScript code inlining utilities",
+  "keywords": [
+    "inline"
+  ],
+  "author": "Matthieu Monsch <mtth@apache.org>",
+  "license": "MIT",
+  "type": "module",
+  "bin": "bin/inlinable.mjs",
+  "files": [
+    "bin/",
+    "lib/"
+  ],
+  "exports": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "scripts": {
+    "build": "tsc -b src test",
+    "clean": "rm -rf lib node_modules out $(find test -name '*.actual.*')",
+    "fix": "prettier --write",
+    "prepare": "pnpm run build",
+    "test": "vitest",
+    "watch": "tsc -b -w src test"
+  },
+  "dependencies": {
+    "@mtth/stl-errors": "workspace:*",
+    "@mtth/stl-utils": "workspace:*",
+    "acorn": "^8.11.3",
+    "ast-types": "^0.14.2",
+    "commander": "^12.1.0",
+    "glob": "^10.4.1",
+    "inlinable-runtime": "workspace:*",
+    "ora": "^8.0.1",
+    "recast": "^0.23.7"
+  },
+  "devDependencies": {
+    "ts-essentials": "^10.0.0"
+  }
+}

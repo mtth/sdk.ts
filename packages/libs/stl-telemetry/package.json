@@ -25,7 +25,7 @@
   "dependencies": {
     "@mtth/stl-errors": "workspace:*",
     "@mtth/stl-utils": "workspace:*",
-    "inlinable-runtime": "^0.3.4",
+    "inlinable-runtime": "workspace:*",
     "pino": "^9.5.0",
     "pino-std-serializers": "^7.0.0"
   },

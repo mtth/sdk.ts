@@ -5,8 +5,8 @@ import * as otel from '@opentelemetry/api';
 import {NodeTracerProvider} from '@opentelemetry/sdk-trace-node';
 import {setImmediate, setTimeout} from 'timers/promises';
 
-import {codes, deadlines} from '../../../src/resilience/deadlines/common.js';
-import * as sut from '../../../src/resilience/deadlines/race.js';
+import {codes, deadlines} from '../../src/deadlines/common.js';
+import * as sut from '../../src/deadlines/race.js';
 
 const provider = new NodeTracerProvider();
 provider.register();

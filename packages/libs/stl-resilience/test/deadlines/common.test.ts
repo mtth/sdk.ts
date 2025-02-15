@@ -2,7 +2,7 @@ import {fail} from '@mtth/stl-errors';
 import {DateTime, Duration} from 'luxon';
 import {setTimeout} from 'timers/promises';
 
-import * as sut from '../../../src/resilience/deadlines/common.js';
+import * as sut from '../../src/deadlines/common.js';
 
 describe('in distant future', () => {
   test.each([

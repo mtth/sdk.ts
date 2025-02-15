@@ -16,8 +16,7 @@ import events from 'events';
 import {DateTime, Duration} from 'luxon';
 import {setImmediate} from 'timers/promises';
 
-import {packageInfo} from '../../common.js';
-import {firstAborted} from '../signals.js';
+import {firstAborted, packageInfo} from '../common.js';
 import {
   activeImpatience,
   codes as commonCodes,

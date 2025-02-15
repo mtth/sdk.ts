@@ -1,0 +1,15 @@
+coverage:
+  precision: 2
+  round: down
+  range: '50...100'
+  status:
+    project:
+      default:
+        threshold: 5
+    patch:
+      default:
+        threshold: 50
+comment:
+  layout: 'files,flags'
+  behavior: default
+  require_changes: true

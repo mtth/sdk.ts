@@ -18,6 +18,9 @@
   * [`@mtth/prettier-typescript`](/packages/configs/prettier-typescript)
   * [`@mtth/tsconfig`](/packages/configs/tsconfig)
 
+
+## Libraries dependency flow
+
 ```mermaid
 flowchart TD
   stl-errors --> stl-bootstrap

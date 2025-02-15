@@ -12,6 +12,7 @@ TypeScript.
 * Libraries
   * [`@mtth/stl-bootstrap`](/packages/libs/stl-bootstrap)
   * [`@mtth/stl-errors`](/packages/libs/stl-errors)
+  * [`@mtth/stl-graphql`](/packages/libs/stl-graphql)
   * [`@mtth/stl-koa`](/packages/libs/stl-koa)
   * [`@mtth/stl-resilience`](/packages/libs/stl-resilience)
   * [`@mtth/stl-settings`](/packages/libs/stl-settings)
@@ -31,6 +32,9 @@ flowchart TD
   stl-errors --> stl-bootstrap
   stl-telemetry --> stl-bootstrap
   stl-utils --> stl-bootstrap
+
+  stl-errors --> stl-graphql
+  stl-utils --> stl-graphql
 
   stl-errors --> stl-koa
   stl-resilience --> stl-koa

@@ -1,0 +1,38 @@
+{
+  "name": "@mtth/stl-graphql",
+  "version": "0.0.0",
+  "repository": "github:mtth/sdk.ts",
+  "description": "Standard GraphQL utilities",
+  "keywords": [
+    "stl",
+    "graphql"
+  ],
+  "author": "Matthieu Monsch <mtth@apache.org>",
+  "license": "Apache-2.0",
+  "type": "module",
+  "files": [
+    "lib/",
+    "resources/"
+  ],
+  "exports": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "scripts": {
+    "build": "tsc -b src test",
+    "clean": "rm -rf lib node_modules out",
+    "fix": "prettier --write",
+    "prepare": "pnpm run build",
+    "test": "vitest",
+    "watch": "tsc -b -w src test"
+  },
+  "dependencies": {
+    "@mtth/stl-errors": "workspace:*",
+    "@mtth/stl-utils": "workspace:*",
+    "graphql": "^16.9.0"
+  },
+  "devDependencies": {
+    "@opentelemetry/api": "~1.9.0",
+    "graphql-yoga": "^3.9.1",
+    "inlinable": "workspace:*",
+    "supertest": "^7.0.0"
+  }
+}

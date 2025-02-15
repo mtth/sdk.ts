@@ -1,0 +1,48 @@
+{
+  "name": "@mtth/stl-utils",
+  "version": "0.0.0",
+  "repository": "github:mtth/sdk.ts",
+  "description": "Standard utilities",
+  "keywords": [
+    "stl"
+  ],
+  "author": "Matthieu Monsch <mtth@apache.org>",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "lib/"
+  ],
+  "exports": {
+    "./bindable": "./lib/bindable.js",
+    "./buffers": "./lib/buffers.js",
+    "./collections": "./lib/collections.js",
+    "./environment": "./lib/environment.js",
+    "./events": "./lib/events.js",
+    "./files": "./lib/files.js",
+    "./functions": "./lib/functions.js",
+    "./intensive": "./lib/intensive.js",
+    "./objects": "./lib/objects.js",
+    "./opaques": "./lib/opaques.js",
+    "./strings": "./lib/strings.js"
+  },
+  "scripts": {
+    "build": "tsc -b src test",
+    "clean": "rm -rf lib node_modules out",
+    "fix": "prettier --write",
+    "prepare": "pnpm run build",
+    "test": "vitest",
+    "watch": "tsc -b -w src test"
+  },
+  "dependencies": {
+    "@mtth/stl-errors": "workspace:*",
+    "change-case": "^5.4.4",
+    "fast-deep-equal": "^3.1.3",
+    "inlinable-runtime": "workspace:*",
+    "picomatch": "^4.0.2",
+    "untruncate-json": "^0.0.1"
+  },
+  "devDependencies": {
+    "@types/picomatch": "^2.3.4",
+    "benchmark": "^2.1.4"
+  }
+}

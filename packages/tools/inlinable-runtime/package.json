@@ -1,0 +1,32 @@
+{
+  "name": "inlinable-runtime",
+  "version": "0.0.0",
+  "repository": "github:mtth/sdk.ts",
+  "description": "JavaScript code inlining runtime utilities",
+  "keywords": [
+    "inline"
+  ],
+  "author": "Matthieu Monsch <mtth@apache.org>",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "lib/"
+  ],
+  "exports": {
+    ".": "./lib/index.js",
+    "./sentinel": "./lib/sentinel.js",
+    "./stub": "./lib/transform/stub.js",
+    "./stub/*": "./lib/transform/codecs/*.js"
+  },
+  "scripts": {
+    "build": "tsc -b src test",
+    "clean": "rm -rf lib node_modules out",
+    "fix": "prettier --write",
+    "prepare": "pnpm run build",
+    "test": "vitest",
+    "watch": "tsc -b -w src test"
+  },
+  "dependencies": {
+    "fflate": "^0.8.2"
+  }
+}

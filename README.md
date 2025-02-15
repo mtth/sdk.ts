@@ -1,5 +1,9 @@
 # TypeScript development toolkit [![CI](https://github.com/mtth/sdk.ts/actions/workflows/ci.yaml/badge.svg)](https://github.com/mtth/sdk.ts/actions/workflows/ci.yaml)
 
+A collection of tools, libraries, and configurations useful for writing
+TypeScript.
+
+
 ## NPM Packages
 
 * Tools

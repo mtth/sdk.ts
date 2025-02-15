@@ -1,7 +1,9 @@
+#!/usr/bin/env node
+
 import benchmark from 'benchmark';
 import crypto from 'crypto';
 
-import {intensive} from '../lib/functions.js';
+import {intensive} from '../lib/intensive.js';
 
 const sentinel = Symbol('sentinel');
 

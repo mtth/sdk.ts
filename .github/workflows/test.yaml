@@ -14,10 +14,6 @@ on:
         required: false
         type: boolean
         default: false
-      services-file:
-        required: false
-        type: string
-        default: ''
     outputs:
       new-version:
         value: ${{ jobs.tag.outputs.new-version }}
@@ -41,19 +37,6 @@ jobs:
           setup-protoc: ${{ inputs.setup-protoc }}
       - name: Lint
         run: pnpm run lint
-      - name: Log in to GCR
-        if: inputs.services-file != ''
-        uses: docker/login-action@v3
-        with:
-          username: mtth
-          password: ${{ secrets.GPR_RO_TOKEN }}
-          registry: ghcr.io
-      - name: Set up services
-        if: inputs.services-file != ''
-        uses: hoverkraft-tech/compose-action@v2.0.1
-        with:
-          up-flags: --wait
-          compose-file: ${{ inputs.services-file }}
       - name: Test
         run: ${{ inputs.test-command }}
       - name: Upload coverage

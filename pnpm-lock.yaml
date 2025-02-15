@@ -10,13 +10,13 @@ importers:
     devDependencies:
       '@mtth/eslint-plugin':
         specifier: workspace:*
-        version: link:packages/tools/eslint-plugin
+        version: link:packages/configs/eslint-plugin
       '@mtth/prettier-typescript':
         specifier: workspace:*
-        version: link:packages/tools/prettier-typescript
+        version: link:packages/configs/prettier-typescript
       '@mtth/tsconfig':
         specifier: workspace:*
-        version: link:packages/tools/tsconfig
+        version: link:packages/configs/tsconfig
       '@types/node':
         specifier: ^18.19.64
         version: 18.19.76
@@ -44,6 +44,38 @@ importers:
       vitest:
         specifier: ^2.1.5
         version: 2.1.9(@types/node@18.19.76)
+
+  packages/configs/eslint-plugin:
+    dependencies:
+      '@eslint/js':
+        specifier: ^9.20.0
+        version: 9.20.0
+      '@stylistic/eslint-plugin':
+        specifier: ^3.1.0
+        version: 3.1.0(eslint@9.20.1)(typescript@5.7.3)
+      '@typescript-eslint/parser':
+        specifier: ^8.24.0
+        version: 8.24.0(eslint@9.20.1)(typescript@5.7.3)
+      eslint-plugin-simple-import-sort:
+        specifier: ^12.1.1
+        version: 12.1.1(eslint@9.20.1)
+      eslint-plugin-unused-imports:
+        specifier: ^4.1.4
+        version: 4.1.4(@typescript-eslint/eslint-plugin@8.24.0(@typescript-eslint/parser@8.24.0(eslint@9.20.1)(typescript@5.7.3))(eslint@9.20.1)(typescript@5.7.3))(eslint@9.20.1)
+      typescript-eslint:
+        specifier: ^8.24.0
+        version: 8.24.0(eslint@9.20.1)(typescript@5.7.3)
+    devDependencies:
+      eslint:
+        specifier: ^9.20.1
+        version: 9.20.1
+      typescript:
+        specifier: ^5.7.3
+        version: 5.7.3
+
+  packages/configs/prettier-typescript: {}
+
+  packages/configs/tsconfig: {}
 
   packages/libs/stl-bootstrap:
     dependencies:
@@ -92,7 +124,7 @@ importers:
         version: 2.1.4
       inlinable:
         specifier: workspace:*
-        version: link:../../tools/packages/inlinable
+        version: link:../../tools/inlinable
       ts-essentials:
         specifier: ^10.0.3
         version: 10.0.4(typescript@5.7.3)
@@ -122,7 +154,7 @@ importers:
         version: link:../stl-utils
       inlinable-runtime:
         specifier: workspace:*
-        version: link:../../tools/packages/inlinable-runtime
+        version: link:../../tools/inlinable-runtime
       pino:
         specifier: ^9.5.0
         version: 9.6.0
@@ -156,7 +188,7 @@ importers:
         version: 3.1.3
       inlinable-runtime:
         specifier: workspace:*
-        version: link:../../tools/packages/inlinable-runtime
+        version: link:../../tools/inlinable-runtime
       picomatch:
         specifier: ^4.0.2
         version: 4.0.2
@@ -171,42 +203,14 @@ importers:
         specifier: ^2.1.4
         version: 2.1.4
 
-  packages/tools/eslint-plugin:
-    dependencies:
-      '@eslint/js':
-        specifier: ^9.20.0
-        version: 9.20.0
-      '@stylistic/eslint-plugin':
-        specifier: ^3.1.0
-        version: 3.1.0(eslint@9.20.1)(typescript@5.7.3)
-      '@typescript-eslint/parser':
-        specifier: ^8.24.0
-        version: 8.24.0(eslint@9.20.1)(typescript@5.7.3)
-      eslint-plugin-simple-import-sort:
-        specifier: ^12.1.1
-        version: 12.1.1(eslint@9.20.1)
-      eslint-plugin-unused-imports:
-        specifier: ^4.1.4
-        version: 4.1.4(@typescript-eslint/eslint-plugin@8.24.0(@typescript-eslint/parser@8.24.0(eslint@9.20.1)(typescript@5.7.3))(eslint@9.20.1)(typescript@5.7.3))(eslint@9.20.1)
-      typescript-eslint:
-        specifier: ^8.24.0
-        version: 8.24.0(eslint@9.20.1)(typescript@5.7.3)
-    devDependencies:
-      eslint:
-        specifier: ^9.20.1
-        version: 9.20.1
-      typescript:
-        specifier: ^5.7.3
-        version: 5.7.3
-
-  packages/tools/packages/inlinable:
+  packages/tools/inlinable:
     dependencies:
       '@mtth/stl-errors':
         specifier: workspace:*
-        version: link:../../../libs/stl-errors
+        version: link:../../libs/stl-errors
       '@mtth/stl-utils':
         specifier: workspace:*
-        version: link:../../../libs/stl-utils
+        version: link:../../libs/stl-utils
       acorn:
         specifier: ^8.11.3
         version: 8.14.0
@@ -233,15 +237,11 @@ importers:
         specifier: ^10.0.0
         version: 10.0.4(typescript@5.7.3)
 
-  packages/tools/packages/inlinable-runtime:
+  packages/tools/inlinable-runtime:
     dependencies:
       fflate:
         specifier: ^0.8.2
         version: 0.8.2
-
-  packages/tools/prettier-typescript: {}
-
-  packages/tools/tsconfig: {}
 
 packages:
 

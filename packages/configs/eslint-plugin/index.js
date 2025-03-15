@@ -15,7 +15,7 @@ export default tseslint.config(
     plugins: {'@stylistic': stylistic},
     rules: {
       '@stylistic/member-delimiter-style': 'error',
-      '@stylistic/quotes': ['error', 'single'],
+      '@stylistic/quotes': ['error', 'single', {avoidEscape: true}],
       '@stylistic/semi': 'error',
       '@stylistic/type-annotation-spacing': 'error',
     },

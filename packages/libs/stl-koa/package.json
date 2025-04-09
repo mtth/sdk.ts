@@ -37,7 +37,7 @@
     "@mtth/stl-utils": "workspace:*",
     "ajv": "^8.17.1",
     "get-port": "^7.1.0",
-    "koa": "^2.15.3",
+    "koa": "^2.16.1",
     "koa-body": "^6.0.1",
     "koa-compose": "^4.1.0",
     "koa-compress": "^5.1.1",

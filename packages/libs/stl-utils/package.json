@@ -25,6 +25,21 @@
     "./opaques": "./lib/opaques.js",
     "./strings": "./lib/strings.js"
   },
+  "typesVersions": {
+    "*": {
+      "bindable": ["./lib/bindable.d.ts"],
+      "buffers": ["./lib/buffers.d.ts"],
+      "collections": ["./lib/collections.d.ts"],
+      "environment": ["./lib/environment.d.ts"],
+      "events": ["./lib/events.d.ts"],
+      "files": ["./lib/files.d.ts"],
+      "functions": ["./lib/functions.d.ts"],
+      "intensive": ["./lib/intensive.d.ts"],
+      "objects": ["./lib/objects.d.ts"],
+      "opaques": ["./lib/opaques.d.ts"],
+      "strings": ["./lib/strings.d.ts"]
+    }
+  },
   "scripts": {
     "build": "tsc -b src test",
     "clean": "rm -rf lib node_modules out",

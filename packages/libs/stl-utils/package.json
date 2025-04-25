@@ -13,32 +13,7 @@
     "lib/"
   ],
   "exports": {
-    "./bindable": "./lib/bindable.js",
-    "./buffers": "./lib/buffers.js",
-    "./collections": "./lib/collections.js",
-    "./environment": "./lib/environment.js",
-    "./events": "./lib/events.js",
-    "./files": "./lib/files.js",
-    "./functions": "./lib/functions.js",
-    "./intensive": "./lib/intensive.js",
-    "./objects": "./lib/objects.js",
-    "./opaques": "./lib/opaques.js",
-    "./strings": "./lib/strings.js"
-  },
-  "typesVersions": {
-    "*": {
-      "bindable": ["./lib/bindable.d.ts"],
-      "buffers": ["./lib/buffers.d.ts"],
-      "collections": ["./lib/collections.d.ts"],
-      "environment": ["./lib/environment.d.ts"],
-      "events": ["./lib/events.d.ts"],
-      "files": ["./lib/files.d.ts"],
-      "functions": ["./lib/functions.d.ts"],
-      "intensive": ["./lib/intensive.d.ts"],
-      "objects": ["./lib/objects.d.ts"],
-      "opaques": ["./lib/opaques.d.ts"],
-      "strings": ["./lib/strings.d.ts"]
-    }
+    "./*": "./lib/*.js"
   },
   "scripts": {
     "build": "tsc -b src test",

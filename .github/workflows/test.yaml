@@ -33,14 +33,8 @@ jobs:
         uses: mtth/sdk.ts/.github/actions/setup@main
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          node-auth-token: ${{ secrets.GPR_RO_TOKEN }}
           setup-protoc: ${{ inputs.setup-protoc }}
       - name: Lint
         run: pnpm run lint
       - name: Test
         run: ${{ inputs.test-command }}
-      - name: Upload coverage
-        uses: codecov/codecov-action@v4
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          directory: out/coverage

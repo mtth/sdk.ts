@@ -9,22 +9,3 @@ jobs:
   test:
     name: Test
     uses: ./.github/workflows/test.yaml
-  tag:
-    name: Tag
-    needs: test
-    permissions:
-      contents: write
-    uses: ./.github/workflows/tag.yaml
-  publish-npm:
-    name: Publish packages to NPM
-    needs: tag
-    if: needs.tag.outputs.new-version != ''
-    permissions:
-      contents: read
-      packages: write
-    uses: ./.github/workflows/publish-packages.yaml
-    secrets: inherit
-    with:
-      version: ${{ needs.tag.outputs.new-version }}
-      registry: npm
-      publish-command: pnpm -r exec pnpm publish --access public

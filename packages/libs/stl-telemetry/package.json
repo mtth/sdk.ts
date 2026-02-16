@@ -30,7 +30,7 @@
     "@mtth/stl-errors": "workspace:*",
     "@mtth/stl-utils": "workspace:*",
     "pino": "^9.14.0",
-    "pino-std-serializers": "^7.0.0"
+    "pino-std-serializers": "^7.1.0"
   },
   "peerDependencies": {
     "@opentelemetry/api": "~1.9.0"

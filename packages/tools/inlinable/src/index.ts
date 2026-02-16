@@ -1,8 +1,8 @@
-import {Inline} from 'inlinable-runtime';
+import {Inline} from '@mtth/inlinable-runtime';
 
 import {registerInlinable} from './inline/index.js';
 
-export type * from 'inlinable-runtime';
+export type * from '@mtth/inlinable-runtime';
 
 /** Marks a function as inlinable. */
 const __inline: Inline = registerInlinable;

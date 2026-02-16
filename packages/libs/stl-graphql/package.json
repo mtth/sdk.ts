@@ -1,7 +1,10 @@
 {
   "name": "@mtth/stl-graphql",
   "version": "0.0.0",
-  "repository": "github:mtth/sdk.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://forge.mtth.dev/mtth/sdk.ts.git"
+  },
   "description": "Standard GraphQL utilities",
   "keywords": [
     "stl",
@@ -27,12 +30,12 @@
   "dependencies": {
     "@mtth/stl-errors": "workspace:*",
     "@mtth/stl-utils": "workspace:*",
-    "graphql": "^16.9.0"
+    "graphql": "^16.12.0"
   },
   "devDependencies": {
+    "@mtth/inlinable": "workspace:*",
     "@opentelemetry/api": "~1.9.0",
     "graphql-yoga": "^3.9.1",
-    "inlinable": "workspace:*",
-    "supertest": "^7.0.0"
+    "supertest": "^7.1.4"
   }
 }

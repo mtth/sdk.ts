@@ -1,5 +1,5 @@
-import __inline from "inlinable-runtime/stub";
-import "inlinable-runtime/stub/base64";
+import __inline from "@mtth/inlinable-runtime/stub";
+import "@mtth/inlinable-runtime/stub/base64";
 
 const foo = "abc";
 

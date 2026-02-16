@@ -1,7 +1,10 @@
 {
   "name": "@mtth/stl-settings",
   "version": "0.0.0",
-  "repository": "github:mtth/sdk.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://forge.mtth.dev/mtth/sdk.ts.git"
+  },
   "description": "Standard settings library",
   "keywords": [
     "stl"

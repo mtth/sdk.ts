@@ -1,12 +1,12 @@
-import {assert, errorFactories} from '@mtth/stl-errors';
-import {LocalPath} from '@mtth/stl-utils/files';
-import ast from 'ast-types';
 import {
   Inlinable,
   InlineTransformName,
   isInlineTransformName,
-} from 'inlinable-runtime';
-import {inlining} from 'inlinable-runtime/sentinel';
+} from '@mtth/inlinable-runtime';
+import {inlining} from '@mtth/inlinable-runtime/sentinel';
+import {assert, errorFactories} from '@mtth/stl-errors';
+import {LocalPath} from '@mtth/stl-utils/files';
+import ast from 'ast-types';
 import path from 'path';
 
 import {ERROR_PREFIX} from '../common.js';
@@ -40,7 +40,7 @@ const [errors, errorCodes] = errorFactories({
 
 export {errorCodes};
 
-const statesSymbol = Symbol.for('inlinable:inliningStates+v2');
+const statesSymbol = Symbol.for('@mtth/inlinable:inliningStates+v2');
 
 export interface RegisterInlinable {
   <V>(init: Inlinable<V>, key?: RegistrationKey): V;

@@ -4,7 +4,7 @@ import {ifPresent} from '@mtth/stl-utils/functions';
 import {PrettyFormatter, PrettyFormatterOptions} from '@mtth/stl-utils/objects';
 import * as otel from '@opentelemetry/api';
 import {
-  default as pinoLogger_,
+  default as pinoLogger,
   destination,
   DestinationStream,
   Level,
@@ -17,8 +17,6 @@ import {isExplicitVersion, LibInfo} from '../common.js';
 import {LevelNumber, levelNumber, LogThresholder} from './common.js';
 import {activeLevelNumber, contextLogValues} from './context.js';
 import {ErrorSerializer, errorSerializer} from './errors.js';
-
-const pinoLogger = pinoLogger_.default ?? pinoLogger_;
 
 // TODO: Benchmark this implementation, for ex compared to pino.
 

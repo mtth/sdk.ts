@@ -1,7 +1,7 @@
+import {isInlining} from '@mtth/inlinable-runtime';
 import {assert} from '@mtth/stl-errors';
 import {running} from '@mtth/stl-utils/environment';
 import {GlobMapper} from '@mtth/stl-utils/strings';
-import {isInlining} from 'inlinable-runtime';
 import {Level, levels} from 'pino';
 
 export interface MinLevels {

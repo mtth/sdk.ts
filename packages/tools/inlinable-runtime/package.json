@@ -1,7 +1,10 @@
 {
-  "name": "inlinable-runtime",
+  "name": "@mtth/inlinable-runtime",
   "version": "0.0.0",
-  "repository": "github:mtth/sdk.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://forge.mtth.dev/mtth/sdk.ts.git"
+  },
   "description": "JavaScript code inlining runtime utilities",
   "keywords": [
     "inline"

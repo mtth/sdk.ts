@@ -197,7 +197,7 @@ export async function* yieldEvents<
   }
 
   try {
-    yield* events.on(consumer, name, {signal});
+    yield* events.on(consumer, name, {signal}) as AsyncIterable<any>;
   } catch (err: any) {
     if (opts?.throwIfAborted || err.code !== 'ABORT_ERR') {
       throw err;
@@ -298,7 +298,7 @@ export async function waitForEvent<
 ): Promise<Parameters<O[E]>> {
   const sig = opts?.signal;
   sig?.throwIfAborted();
-  const args: any = await events.once(ee, name, {signal: sig});
+  const args: any = await events.once(ee as any, name, {signal: sig});
   return args;
 }
 

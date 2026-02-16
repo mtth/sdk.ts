@@ -1,6 +1,6 @@
+import * as runtime from '@mtth/inlinable-runtime';
 import {assert} from '@mtth/stl-errors';
 import fs from 'fs';
-import * as runtime from 'inlinable-runtime';
 import path from 'path';
 import url from 'url';
 

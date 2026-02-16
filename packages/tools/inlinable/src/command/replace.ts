@@ -1,7 +1,7 @@
+import {inlineTransform, InlineTransformName} from '@mtth/inlinable-runtime';
 import {Multiset} from '@mtth/stl-utils/collections';
 import ast from 'ast-types';
 import {Command} from 'commander';
-import {inlineTransform, InlineTransformName} from 'inlinable-runtime';
 
 import {PACKAGE_NAME, STUBS_PACKAGE_NAME} from '../common.js';
 import {

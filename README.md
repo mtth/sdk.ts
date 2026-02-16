@@ -1,13 +1,13 @@
-# TypeScript development toolkit [![CI](https://github.com/mtth/sdk.ts/actions/workflows/ci.yaml/badge.svg)](https://github.com/mtth/sdk.ts/actions/workflows/ci.yaml)
+# TypeScript development toolkit
 
 A collection of tools, libraries, and configurations useful for writing
 TypeScript.
 
 
-## NPM Packages
+## Packages
 
 * Tools
-  * [`inlinable`](/packages/tools/inlinable)
+  * [`@mtth/inlinable`](/packages/tools/inlinable)
 
 * Libraries
   * [`@mtth/stl-bootstrap`](/packages/libs/stl-bootstrap)

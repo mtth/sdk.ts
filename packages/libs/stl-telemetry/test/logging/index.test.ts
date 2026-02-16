@@ -3,11 +3,9 @@ import {typedEmitter} from '@mtth/stl-utils/events';
 import * as otel from '@opentelemetry/api';
 import {TraceState} from '@opentelemetry/core';
 import {NodeTracerProvider} from '@opentelemetry/sdk-trace-node';
-import {default as pino_} from 'pino';
+import {default as pino} from 'pino';
 
 import * as sut from '../../src/logging/index.js';
-
-const pino = pino_.default ?? pino_;
 
 const provider = new NodeTracerProvider();
 provider.register();

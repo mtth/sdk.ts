@@ -1,4 +1,4 @@
-export const PACKAGE_NAME = 'inlinable';
-export const STUBS_PACKAGE_NAME = 'inlinable-runtime/stub';
+export const PACKAGE_NAME = '@mtth/inlinable';
+export const STUBS_PACKAGE_NAME = '@mtth/inlinable-runtime/stub';
 
 export const ERROR_PREFIX = 'ERR_INLINABLE_';

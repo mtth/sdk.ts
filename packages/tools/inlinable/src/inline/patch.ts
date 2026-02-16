@@ -1,9 +1,9 @@
+import {isInlineTransformName} from '@mtth/inlinable-runtime';
 import {assert, errorFactories, unexpected} from '@mtth/stl-errors';
 import {LocalPath} from '@mtth/stl-utils/files';
 import * as acorn from 'acorn';
 import ast from 'ast-types';
 import {readFile, writeFile} from 'fs/promises';
-import {isInlineTransformName} from 'inlinable-runtime';
 import path from 'path';
 import recast from 'recast';
 

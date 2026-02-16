@@ -1,7 +1,10 @@
 {
   "name": "@mtth/stl-errors",
   "version": "0.0.0",
-  "repository": "github:mtth/sdk.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://forge.mtth.dev/mtth/sdk.ts.git"
+  },
   "description": "Standard errors",
   "keywords": [
     "stl"

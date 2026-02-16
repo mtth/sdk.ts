@@ -1,7 +1,7 @@
+import {enclosingRoot} from '@mtth/inlinable-runtime';
 import {assert, assertType, unexpected} from '@mtth/stl-errors';
 import fs from 'fs';
 import {mkdtemp, readFile, rm} from 'fs/promises';
-import {enclosingRoot} from 'inlinable-runtime';
 import os from 'os';
 import path from 'path';
 import url from 'url';

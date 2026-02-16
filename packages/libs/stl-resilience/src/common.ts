@@ -1,5 +1,5 @@
+import __inlinable from '@mtth/inlinable';
 import {firstElement} from '@mtth/stl-utils/collections';
-import __inlinable from 'inlinable';
 
 export const packageInfo = __inlinable((ctx) =>
   ctx.enclosing(import.meta.url).metadata()

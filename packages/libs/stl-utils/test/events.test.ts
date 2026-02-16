@@ -1,5 +1,4 @@
 import {fail} from '@mtth/stl-errors';
-import events from 'events';
 import stream from 'stream';
 import {setImmediate} from 'timers/promises';
 
@@ -156,7 +155,7 @@ describe('with typed emitter', () => {
     const ee = sut.withTypedEmitter<SimpleListeners>((ee) => {
       ee.emit('count', 123);
     });
-    const args = await events.once(ee, 'count');
+    const args = await sut.waitForEvent(ee, 'count');
     expect(args).toEqual([123]);
   });
 

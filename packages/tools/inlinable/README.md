@@ -5,14 +5,14 @@
 First, add the package as dev dependency:
 
 ```sh
-npm install -D inlinable
+npm install -D @mtth/inlinable
 ```
 
 Then use the default export in any JavaScript module to flag an expression as
 candidate for inlining:
 
 ```typescript
-import __inlinable from 'inlinable';
+import __inlinable from '@mtth/inlinable';
 
 // Inline the contents of `resources/METADATA`
 const metadata = __inlinable((ctx) => {

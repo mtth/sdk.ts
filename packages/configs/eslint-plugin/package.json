@@ -1,7 +1,10 @@
 {
   "name": "@mtth/eslint-plugin",
   "version": "0.0.0",
-  "repository": "github:mtth/sdk.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://forge.mtth.dev/mtth/sdk.ts.git"
+  },
   "description": "Shared linting config",
   "keywords": [
     "eslint"
@@ -11,18 +14,18 @@
   "type": "module",
   "exports": "./index.js",
   "dependencies": {
-    "@eslint/js": "^9.20.0",
+    "@eslint/js": "^9.39.1",
     "@stylistic/eslint-plugin": "^3.1.0",
-    "@typescript-eslint/parser": "^8.24.0",
+    "@typescript-eslint/parser": "^8.46.4",
     "eslint-plugin-simple-import-sort": "^12.1.1",
-    "eslint-plugin-unused-imports": "^4.1.4",
-    "typescript-eslint": "^8.24.0"
+    "eslint-plugin-unused-imports": "^4.3.0",
+    "typescript-eslint": "^8.46.4"
   },
   "peerDependencies": {
     "eslint": "^9.15.0"
   },
   "devDependencies": {
-    "eslint": "^9.20.1",
-    "typescript": "^5.7.3"
+    "eslint": "^9.39.1",
+    "typescript": "^5.9.3"
   }
 }

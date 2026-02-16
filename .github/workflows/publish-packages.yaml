@@ -20,7 +20,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write
     steps:
       - name: Check out
         uses: actions/checkout@v4
@@ -30,5 +29,18 @@ jobs:
           ignore-scripts: true
       - name: Set version
         run: pnpm -r exec pnpm version ${{ inputs.version }}
+      - name: Set up Node for NPM registry
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+      # - name: Set up NPM credentials
+      #   run: |
+      #     cat >.npmrc <<EOF
+      #     //registry.npmjs.org:_authToken=${NODE_AUTH_TOKEN}
+      #     @mtth:registry=https://registry.npmjs.org
+      #     EOF
       - name: Publish
         run: ${{ inputs.publish-command }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

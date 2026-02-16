@@ -9,3 +9,12 @@ jobs:
   test:
     name: Test
     uses: ./.github/workflows/test.yaml
+  publish:
+    name: Publish
+    needs: test
+    uses: ./.github/workflows/publish-packages.yaml
+    secrets: inherit
+    with:
+      version: '0.8.13' # TODO: read from repo
+      publish-command: >
+        pnpm -r -F './packages/configs/*' exec pnpm publish --no-git-checks --access public

@@ -35,7 +35,7 @@
     "untruncate-json": "^0.0.1"
   },
   "devDependencies": {
-    "@types/picomatch": "^2.3.4",
+    "@types/picomatch": "^4.0.2",
     "benchmark": "^2.1.4"
   }
 }

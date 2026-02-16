@@ -1,7 +1,7 @@
 import {assert} from '@mtth/stl-errors';
 import {isExplicitVersion, LibInfo} from '@mtth/stl-telemetry';
 import {ProcessEnv} from '@mtth/stl-utils/environment';
-import resources from '@opentelemetry/resources';
+import type {Attributes} from '@opentelemetry/api';
 import {Writable} from 'ts-essentials';
 
 /**
@@ -53,7 +53,7 @@ export function appResourceAttrs(
   return attrs;
 }
 
-export interface AppResourceAttrs extends resources.ResourceAttributes {
+export interface AppResourceAttrs extends Attributes {
   readonly 'service.name': string;
   readonly 'service.namespace'?: string;
   readonly 'service.version'?: string;

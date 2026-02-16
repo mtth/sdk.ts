@@ -8,8 +8,7 @@ export type ErrorPrefix = 'ERR_' | `ERR_${string}_`;
 
 /** An error with associated code and, optionally, cause and structured data. */
 export interface StandardError<T extends ErrorTags = ErrorTags>
-  extends Error,
-    HasErrorTags<T> {
+  extends Error, HasErrorTags<T> {
   /**
    * The error's code. This code should uniquely identify the type of failure
    * represented by the error.

@@ -115,9 +115,7 @@ export abstract class InstrumentableTelemetry implements Telemetry {
 }
 
 export interface TelemetryListeners
-  extends LoggingListeners,
-    MetricsListeners,
-    TracingListeners {
+  extends LoggingListeners, MetricsListeners, TracingListeners {
   /** Emitted when telemetry `.shutdown()` is called. */
   shutdown: () => void;
 }

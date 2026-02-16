@@ -88,7 +88,7 @@ export function createThrottle(args: {
       keyPrefix: `ttt:b-${id}`,
     })
   );
-  return new ActiveThrottle(tel, metrics, limiter, burstLimiter, id, reason);
+  return new ActiveThrottle(metrics, limiter, burstLimiter, id, reason);
 }
 
 class InactiveThrottle implements Throttle {
@@ -99,7 +99,6 @@ class InactiveThrottle implements Throttle {
 
 class ActiveThrottle implements Throttle {
   constructor(
-    private readonly telemetry: Telemetry,
     private readonly metrics: Metrics,
     private readonly limiter: RateLimiterAbstract,
     private readonly burstLimiter: RateLimiterAbstract | undefined,
@@ -136,7 +135,11 @@ class ActiveThrottle implements Throttle {
         await this.burstLimiter.consume(key, opts?.points);
       } catch (burstCause) {
         assertCause(burstCause instanceof RateLimiterRes, cause);
-        const ms = Math.min(cause.msBeforeNext, burstCause.msBeforeNext);
+        const msCandidates = [
+          cause.msBeforeNext,
+          burstCause.msBeforeNext,
+        ].filter((v): v is number => typeof v === 'number' && !Number.isNaN(v));
+        const ms = msCandidates.length ? Math.min(...msCandidates) : 0;
         throw this.error(ms, opts?.remediation);
       }
     }

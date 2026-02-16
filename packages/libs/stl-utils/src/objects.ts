@@ -8,6 +8,10 @@ import {upperCaseFirst} from './strings.js';
 
 const untruncate = untruncate_.default ?? untruncate_;
 
+type RelativeIndexable<T> = ArrayLike<T> & {
+  at?: (index: number) => T | undefined;
+};
+
 /** Convenience empty record type. */
 export type Empty = Record<string, never>;
 
@@ -492,20 +496,24 @@ export class PrettyFormatter {
   ): ReadonlyArray<unknown> {
     const padding = this.arrayPadding;
     const omitted = total - padding * 2;
+    const read =
+      typeof arg.at == 'function'
+        ? (idx: number) => arg.at!(idx)
+        : (idx: number) => (arg as ArrayLike<unknown>)[idx];
     if (omitted <= 0) {
       const copy = new Array(total);
       for (let i = 0; i < total; i++) {
-        copy[i] = this.format(arg.at(i));
+        copy[i] = this.format(read(i));
       }
       return copy;
     }
     const copy = new Array(2 * padding + 1);
     for (let i = 0; i < padding; i++) {
-      copy[i] = this.format(arg.at(i));
+      copy[i] = this.format(read(i));
     }
     copy[padding] = ellipsis(omitted);
     for (let i = 0; i < padding; i++) {
-      copy[padding + 1 + i] = this.format(arg.at(total - padding + i));
+      copy[padding + 1 + i] = this.format(read(total - padding + i));
     }
     return copy;
   }

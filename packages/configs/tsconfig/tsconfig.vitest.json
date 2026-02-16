@@ -3,7 +3,7 @@
   "compilerOptions": {
     "noEmit": true,
     "noImplicitAny": false,
-    "types": ["vitest/globals"],
+    "types": ["node", "vitest/importMeta", "vitest/globals"],
     "useUnknownInCatchVariables": false
   }
 }

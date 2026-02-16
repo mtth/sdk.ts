@@ -18,8 +18,9 @@ import {collectable, Endo} from './functions.js';
  * Operations may only be run once, whether directly (via `run` and `runSync`)
  * or indirectly (by embedding it).
  */
-export interface Intensive<V = void>
-  extends EventConsumer<IntensiveListeners<V>> {
+export interface Intensive<V = void> extends EventConsumer<
+  IntensiveListeners<V>
+> {
   readonly [isIntensiveMarker]: true;
 
   /**

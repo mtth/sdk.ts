@@ -14,7 +14,9 @@ describe('throttle', () => {
   beforeEach(() => {
     limiter = new rateLimiterFlexible.RateLimiterMemory({}) as any;
     vi.mocked(rateLimiterFlexible.RateLimiterMemory).mockImplementation(
-      () => limiter
+      function MockLimiter() {
+        return limiter;
+      }
     );
   });
 

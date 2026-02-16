@@ -59,8 +59,7 @@ export function dateTimeSetting<S extends SettingSource>(
 }
 
 export interface DateTimeSettingOptions
-  extends SettingOptions,
-    ParseDateTimeOptions {}
+  extends SettingOptions, ParseDateTimeOptions {}
 
 /**
  * Parses a Luxon duration. It can parse three types of inputs:

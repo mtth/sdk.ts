@@ -122,9 +122,9 @@ export function range(to: number, from?: number): ReadonlyArray<number> {
 }
 
 /** Base multimap class. */
-abstract class Multimap<K, V, C extends Iterable<V>>
-  implements Iterable<[K, V]>
-{
+abstract class Multimap<K, V, C extends Iterable<V>> implements Iterable<
+  [K, V]
+> {
   private _size = 0;
   protected readonly data = new Map<K, C>();
 

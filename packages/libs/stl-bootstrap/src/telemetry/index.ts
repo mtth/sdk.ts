@@ -11,14 +11,26 @@ import {
 import {EventProducer, typedEmitter} from '@mtth/stl-utils/events';
 import {ifPresent} from '@mtth/stl-utils/functions';
 import * as otel from '@opentelemetry/api';
-import contextAsyncHooks from '@opentelemetry/context-async-hooks';
-import core from '@opentelemetry/core';
-import exporterMetricsOtlpHttp from '@opentelemetry/exporter-metrics-otlp-http';
-import exporterTraceOtlpHttp from '@opentelemetry/exporter-trace-otlp-http';
-import resources from '@opentelemetry/resources';
-import sdkMetrics from '@opentelemetry/sdk-metrics';
-import sdkTraceBase from '@opentelemetry/sdk-trace-base';
-import sdkTraceNode from '@opentelemetry/sdk-trace-node';
+import {AsyncLocalStorageContextManager} from '@opentelemetry/context-async-hooks';
+import {
+  CompositePropagator,
+  W3CBaggagePropagator,
+  W3CTraceContextPropagator,
+} from '@opentelemetry/core';
+import {OTLPMetricExporter} from '@opentelemetry/exporter-metrics-otlp-http';
+import {OTLPTraceExporter} from '@opentelemetry/exporter-trace-otlp-http';
+import {resourceFromAttributes} from '@opentelemetry/resources';
+import {
+  MeterProvider,
+  MetricReader,
+  PeriodicExportingMetricReader,
+} from '@opentelemetry/sdk-metrics';
+import {
+  BatchSpanProcessor,
+  NoopSpanProcessor,
+  SpanExporter,
+} from '@opentelemetry/sdk-trace-base';
+import {NodeTracerProvider} from '@opentelemetry/sdk-trace-node';
 
 import {packageInfo} from '../common.js';
 import {appMatchesService, appResourceAttrs} from './common.js';
@@ -66,14 +78,11 @@ export function enableContextPropagation(): void {
   // does. Isolating these steps allows us to support context propagation while
   // having multiple providers (with potentially different resource attributes,
   // each within an `AppTelemetry`).
-  const manager = new contextAsyncHooks.AsyncLocalStorageContextManager();
+  const manager = new AsyncLocalStorageContextManager();
   manager.enable();
   otel.context.setGlobalContextManager(manager);
-  const propagator = new core.CompositePropagator({
-    propagators: [
-      new core.W3CBaggagePropagator(),
-      new core.W3CTraceContextPropagator(),
-    ],
+  const propagator = new CompositePropagator({
+    propagators: [new W3CBaggagePropagator(), new W3CTraceContextPropagator()],
   });
   otel.propagation.setGlobalPropagator(propagator);
 
@@ -88,8 +97,8 @@ export class AppTelemetry extends InstrumentableTelemetry {
     loggerProvider: LoggerProvider,
     tracerProvider: otel.TracerProvider,
     lib: LibInfo,
-    private readonly meterProvider: sdkMetrics.MeterProvider,
-    private readonly spanExporter: sdkTraceBase.SpanExporter | undefined
+    private readonly meterProvider: MeterProvider,
+    private readonly spanExporter: SpanExporter | undefined
   ) {
     super(emitter, metricLoader, loggerProvider, tracerProvider, lib);
   }
@@ -108,7 +117,7 @@ export class AppTelemetry extends InstrumentableTelemetry {
 
     const resAttrs = appResourceAttrs(app);
     const isMain = appMatchesService(app, resAttrs);
-    const res = new resources.Resource({...resAttrs, ...opts?.attrs});
+    const res = resourceFromAttributes({...resAttrs, ...opts?.attrs});
     const ee = typedEmitter<TelemetryListeners>();
     ifPresent(opts?.onShutdown, (fn) => void ee.on('shutdown', fn));
 
@@ -128,35 +137,36 @@ export class AppTelemetry extends InstrumentableTelemetry {
     // TODO: Logs exporter
 
     // Metrics
-    const meterProvider = new sdkMetrics.MeterProvider({resource: res});
-    for (const reader of opts?.metricsReaders ?? []) {
-      meterProvider.addMetricReader(reader);
-    }
+    const metricReaders = [...(opts?.metricsReaders ?? [])];
     const hasMetricsExporter = isOtelMetricsExporterAvailable();
     const exportMetrics = opts?.exportMetrics ?? (isMain && hasMetricsExporter);
     if (exportMetrics) {
       assert(hasMetricsExporter, 'Missing metrics exporter');
-      const exporter = new exporterMetricsOtlpHttp.OTLPMetricExporter();
-      meterProvider.addMetricReader(
-        new sdkMetrics.PeriodicExportingMetricReader({exporter})
-      );
+      const exporter = new OTLPMetricExporter();
+      metricReaders.push(new PeriodicExportingMetricReader({exporter}));
     }
+    const meterProvider = new MeterProvider({
+      resource: res,
+      readers: metricReaders,
+    });
 
     // Tracing
-    const tracerProvider = new sdkTraceNode.NodeTracerProvider({resource: res});
+    const spanProcessors = [];
     const hasTracesExporter = isOtelTracesExporterAvailable();
     const exportTraces = opts?.exportTraces ?? (isMain && hasTracesExporter);
-    let spanExporter;
+    let spanExporter: SpanExporter | undefined;
     if (exportTraces) {
       assert(hasTracesExporter, 'Missing traces exporter');
-      spanExporter = new exporterTraceOtlpHttp.OTLPTraceExporter();
-      tracerProvider.addSpanProcessor(
-        new sdkTraceBase.BatchSpanProcessor(spanExporter)
-      );
+      spanExporter = new OTLPTraceExporter();
+      spanProcessors.push(new BatchSpanProcessor(spanExporter));
       logger.trace('Started trace exporter.');
     } else {
-      tracerProvider.addSpanProcessor(new sdkTraceBase.NoopSpanProcessor());
+      spanProcessors.push(new NoopSpanProcessor());
     }
+    const tracerProvider = new NodeTracerProvider({
+      resource: res,
+      spanProcessors,
+    });
     if (opts?.registerTraceProvider) {
       // We add explicit nulls here to prevent registration from overriding the
       // values set by `enableContextPropagation`.
@@ -223,7 +233,7 @@ export interface AppTelemetryOptions {
   readonly attrs?: otel.Attributes;
 
   /** Additional metric readers (see also `exportMetrics`). */
-  readonly metricsReaders?: ReadonlyArray<sdkMetrics.MetricReader>;
+  readonly metricsReaders?: ReadonlyArray<MetricReader>;
 
   /**
    * Whether metrics should be exported. Defaults to `true` if the OTel metrics

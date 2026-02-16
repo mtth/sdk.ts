@@ -27,7 +27,7 @@ import {MarkPresent} from '@mtth/stl-utils/objects';
 import * as otel from '@opentelemetry/api';
 import events from 'events';
 import {Duration} from 'luxon';
-import pRetry, {Options as PRetryOptions} from 'p-retry';
+import pRetry, {Options as PRetryOptions, RetryContext} from 'p-retry';
 
 import {packageInfo} from './common.js';
 import {
@@ -63,8 +63,7 @@ const DEFAULT_BACKOFF_FACTOR = 2;
 const defaultInitialBackoff = Duration.fromMillis(100);
 const defaultAsymptoticBackoff = Duration.fromObject({seconds: 15});
 
-// p-retry's option type is needlessly complicated.
-type RetryOptions = Exclude<PRetryOptions, number[]>;
+type RetryOptions = PRetryOptions;
 
 /**
  * Runs the provided function within the provided deadline and/or abort signals.
@@ -368,9 +367,9 @@ class RealResilient<V> extends events.EventEmitter {
               : this.runAttempt(lval, dd, updated).catch(coerceAttemptError),
           {
             ...this.retry,
-            onFailedAttempt: (cause) => {
-              const err = originalAttemptError(cause);
-              if (rs.isLost() || !cause.retriesLeft) {
+            onFailedAttempt: (ctx: RetryContext) => {
+              const err = originalAttemptError(ctx.error);
+              if (rs.isLost() || !ctx.retriesLeft) {
                 throw err;
               }
               const attempt = this.attempt;
@@ -383,7 +382,7 @@ class RealResilient<V> extends events.EventEmitter {
                 'Retrying failed attempt.'
               );
               metrics.resilientRetries.add(1, {
-                errorCode: errorCode(cause) ?? '',
+                errorCode: errorCode(ctx.error) ?? '',
                 spanName: this.spanName,
               });
               this.emit('retry', err, attempt);

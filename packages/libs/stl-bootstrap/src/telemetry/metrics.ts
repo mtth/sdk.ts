@@ -6,8 +6,8 @@ import {
 import {EventConsumer} from '@mtth/stl-utils/events';
 import exporterPrometheus from '@opentelemetry/exporter-prometheus';
 import {
-  Aggregation,
   AggregationTemporality,
+  AggregationType,
   MetricReader,
   ResourceMetrics,
 } from '@opentelemetry/sdk-metrics';
@@ -55,7 +55,7 @@ export type MetricsSerializer = (rm: ResourceMetrics) => string;
 export class PrometheusMetricsReader extends MetricReader {
   constructor() {
     super({
-      aggregationSelector: () => Aggregation.Default(),
+      aggregationSelector: () => ({type: AggregationType.DEFAULT}),
       aggregationTemporalitySelector: () => AggregationTemporality.CUMULATIVE,
     });
   }

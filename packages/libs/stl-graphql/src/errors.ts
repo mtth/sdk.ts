@@ -140,8 +140,7 @@ export function graphqlErrorFromFailure(
   });
 }
 
-export interface GraphqlErrorFromFailureOptions
-  extends StandardizeGraphqlErrorOptions {
+export interface GraphqlErrorFromFailureOptions extends StandardizeGraphqlErrorOptions {
   /** GraphQL error creation options. Extensions may be added. */
   readonly graphqlOptions?: gql.GraphQLErrorOptions;
 

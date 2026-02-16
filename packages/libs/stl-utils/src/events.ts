@@ -128,8 +128,7 @@ export interface EventConsumer<O extends EventListenersFor<O>> {
  *  ```
  */
 export interface TypedEmitter<O extends EventListenersFor<O>>
-  extends EventProducer<O>,
-    EventConsumer<O> {
+  extends EventProducer<O>, EventConsumer<O> {
   eventNames(): EventName[];
 }
 

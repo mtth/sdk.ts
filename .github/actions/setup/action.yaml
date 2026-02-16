@@ -1,40 +1,25 @@
 name: Setup
 inputs:
-  github-token:
-    required: true
-  node-auth-token:
-    required: true
-  registry-url:
-    required: false
-    default: https://npm.pkg.github.com
   ignore-scripts:
-    required: false
-    default: 'false'
-  setup-protoc:
     required: false
     default: 'false'
 runs:
   using: composite
   steps:
-    - name: Set up pnpm
-      uses: pnpm/action-setup@v4
+    - name: Set up mise
+      uses: jdx/mise-action@v3
+    - name: Get pnpm store directory
+      shell: bash
+      run: echo "PNPM_STORE_PATH=$(pnpm store path --silent)" >>"$GITHUB_ENV"
+    - name: Cache pnpm store
+      uses: actions/cache@v4
       with:
-        version: 10
-    - name: Set up Node
-      uses: actions/setup-node@v4
-      with:
-        cache: pnpm
-        registry-url: ${{ inputs.registry-url }}
-    - name: Setup protoc
-      if: inputs.setup-protoc == 'true'
-      uses: arduino/setup-protoc@v3
-      with:
-        repo-token: ${{ inputs.github-token }}
+        path: ${{ env.PNPM_STORE_PATH }}
+        key: pnpm-store-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+        restore-keys: pnpm-store-${{ runner.os }}-
     - name: Install
       shell: bash
       run: pnpm install --ignore-scripts
-      env:
-        NODE_AUTH_TOKEN: ${{ inputs.node-auth-token }}
     - name: Build
       if: inputs.ignore-scripts == 'false'
       shell: bash

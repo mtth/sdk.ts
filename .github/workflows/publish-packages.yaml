@@ -28,18 +28,16 @@ jobs:
         with:
           ignore-scripts: true
       - name: Set version
-        run: pnpm -r exec pnpm version ${{ inputs.version }}
+        run: |
+          version=${VERSION_OR_TAG#v}
+          pnpm -r exec pnpm version "$version"
+        env:
+          VERSION_OR_TAG: ${{ inputs.version }}
       - name: Set up Node for NPM registry
         uses: actions/setup-node@v6
         with:
-          node-version: '24'
+          node-version: '24' # TODO: Align with mise version.
           registry-url: 'https://registry.npmjs.org'
-      # - name: Set up NPM credentials
-      #   run: |
-      #     cat >.npmrc <<EOF
-      #     //registry.npmjs.org:_authToken=${NODE_AUTH_TOKEN}
-      #     @mtth:registry=https://registry.npmjs.org
-      #     EOF
       - name: Publish
         run: ${{ inputs.publish-command }}
         env:

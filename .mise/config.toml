@@ -1,5 +1,8 @@
 [tools]
-python = "3.12" # For pre-commit
-pre-commit = "4.3.0"
+pre-commit = "latest"
 node = "24"
-pnpm = "10"
+pnpm = "latest"
+
+[settings]
+experimental = true
+lockfile = true

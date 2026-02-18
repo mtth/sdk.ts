@@ -1,4 +1,5 @@
 import {assert} from '@mtth/stl-errors';
+import {parseDuration} from '@mtth/stl-utils/datetimes';
 import {parseBoolean} from '@mtth/stl-utils/strings';
 
 import {newSetting, Setting, SettingOptions, SettingSource} from './common.js';
@@ -85,6 +86,9 @@ export const stringMapSetting = simpleSettingFactory(
     return ret;
   }
 );
+
+/** Setting parsing a Temporal duration via `parseDuration` */
+export const durationSetting = simpleSettingFactory(parseDuration);
 
 /** URL setting creation parameters. */
 export interface UrlSettingOptions extends SettingOptions {

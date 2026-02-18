@@ -1,0 +1,26 @@
+[[tools.node]]
+version = "24.11.0"
+backend = "core:node"
+"platforms.linux-arm64" = { checksum = "sha256:4786d00c4d259d3ff0b2328307f764ef3ced65f2d6e9502d433e68d66238509d", url = "https://nodejs.org/dist/v24.11.0/node-v24.11.0-linux-arm64.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:b3c071cdf47aab867c3b2aa287257df12ec5d7c962bf922b32fd33226c4295fd", url = "https://nodejs.org/dist/v24.11.0/node-v24.11.0-linux-x64.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:0be2ab2816a4fa02d1acff014a434f29f56d8d956f5af6a98b70ced6c5f4d201", url = "https://nodejs.org/dist/v24.11.0/node-v24.11.0-darwin-arm64.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:3884671e87f46f773832d98a0a6cabcc5ec4f637084f0f3515b69e66ea27f2f1", url = "https://nodejs.org/dist/v24.11.0/node-v24.11.0-darwin-x64.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:1054540bce22b54ec7e50ebc078ec5d090700a77657607a58f6a64df21f49fdd", url = "https://nodejs.org/dist/v24.11.0/node-v24.11.0-win-x64.zip"}
+
+[[tools.pnpm]]
+version = "10.29.3"
+backend = "aqua:pnpm/pnpm"
+"platforms.linux-arm64" = { checksum = "sha256:ae70208882b2c5229e143de2454fc4f778b2d2ae959a2e48ec76a6c26e8b3127", url = "https://github.com/pnpm/pnpm/releases/download/v10.29.3/pnpm-linux-arm64"}
+"platforms.linux-x64" = { checksum = "sha256:2fc98db127c611be0c110af11b5b72759f7d736893dddc81df73b7b59b30f15a", url = "https://github.com/pnpm/pnpm/releases/download/v10.29.3/pnpm-linux-x64"}
+"platforms.macos-arm64" = { checksum = "sha256:a248c56b0ab20443e18d0c8ee3207c6c564ee342bd3fc8694b3569a060cecece", url = "https://github.com/pnpm/pnpm/releases/download/v10.29.3/pnpm-macos-arm64"}
+"platforms.macos-x64" = { checksum = "sha256:569877025e8894d88b1756fdbc0675330dfcd9c01ece4ab26685baafffa8e303", url = "https://github.com/pnpm/pnpm/releases/download/v10.29.3/pnpm-macos-x64"}
+"platforms.windows-x64" = { checksum = "sha256:51a217ad98e138a346da4a43c81bbc64a8ba6df7e2afa7bf5456a163f9105635", url = "https://github.com/pnpm/pnpm/releases/download/v10.29.3/pnpm-win-x64.exe"}
+
+[[tools.pre-commit]]
+version = "4.3.0"
+backend = "aqua:pre-commit/pre-commit"
+"platforms.linux-arm64" = { checksum = "sha256:f1d50b97e9ca9167aceb76c14e90b07cde8b6789bc199d5005cfd817a718878c", url = "https://github.com/pre-commit/pre-commit/releases/download/v4.3.0/pre-commit-4.3.0.pyz"}
+"platforms.linux-x64" = { checksum = "sha256:f1d50b97e9ca9167aceb76c14e90b07cde8b6789bc199d5005cfd817a718878c", url = "https://github.com/pre-commit/pre-commit/releases/download/v4.3.0/pre-commit-4.3.0.pyz"}
+"platforms.macos-arm64" = { checksum = "sha256:f1d50b97e9ca9167aceb76c14e90b07cde8b6789bc199d5005cfd817a718878c", url = "https://github.com/pre-commit/pre-commit/releases/download/v4.3.0/pre-commit-4.3.0.pyz"}
+"platforms.macos-x64" = { checksum = "sha256:f1d50b97e9ca9167aceb76c14e90b07cde8b6789bc199d5005cfd817a718878c", url = "https://github.com/pre-commit/pre-commit/releases/download/v4.3.0/pre-commit-4.3.0.pyz"}
+"platforms.windows-x64" = { checksum = "sha256:f1d50b97e9ca9167aceb76c14e90b07cde8b6789bc199d5005cfd817a718878c", url = "https://github.com/pre-commit/pre-commit/releases/download/v4.3.0/pre-commit-4.3.0.pyz"}

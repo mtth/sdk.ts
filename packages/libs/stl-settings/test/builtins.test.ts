@@ -115,3 +115,25 @@ describe('string map setting', () => {
     expect(got).toEqual(want);
   });
 });
+
+describe('duration setting', () => {
+  const settings = settingsProvider((env) => sut.durationSetting(env.d));
+
+  test.each([
+    ['123', 123],
+    ['2 seconds', 2_000],
+    ['PT2H', 7_200_000],
+  ])('%s is valid', (d, ms) => {
+    expect(settings({d})?.total({unit: 'milliseconds'})).toEqual(ms);
+  });
+
+  test('invalid source', () => {
+    try {
+      settings({d: 'abc'});
+      fail();
+    } catch (err) {
+      expect(err.code).toEqual(settingsErrorCodes.SettingsValidationFailed);
+    }
+    expect.assertions(1);
+  });
+});

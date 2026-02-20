@@ -6,8 +6,10 @@ TypeScript.
 
 ## Packages
 
-* Tools
-  * [`@mtth/inlinable`](packages/tools/inlinable)
+* Configurations
+  * [`@mtth/eslint-plugin`](packages/configs/eslint-plugin)
+  * [`@mtth/prettier-typescript`](packages/configs/prettier-typescript)
+  * [`@mtth/tsconfig`](packages/configs/tsconfig)
 
 * Libraries
   * [`@mtth/stl-bootstrap`](packages/libs/stl-bootstrap)
@@ -19,10 +21,8 @@ TypeScript.
   * [`@mtth/stl-telemetry`](packages/libs/stl-telemetry)
   * [`@mtth/stl-utils`](packages/libs/stl-utils)
 
-* Configurations
-  * [`@mtth/eslint-plugin`](packages/configs/eslint-plugin)
-  * [`@mtth/prettier-typescript`](packages/configs/prettier-typescript)
-  * [`@mtth/tsconfig`](packages/configs/tsconfig)
+* Tools
+  * [`@mtth/inlinable`](packages/tools/inlinable)
 
 
 ## Libraries dependency flow

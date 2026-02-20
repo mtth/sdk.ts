@@ -1,5 +1,12 @@
 # Inlinable
 
+## Highlights
+
+* Build-time evaluation and inlining without a bundler or heavy framework.
+* Works with plain JS/TS output; no Babel/Webpack/Rollup required.
+* Deterministic, JSON-only results with validation for safety.
+* Tiny runtime surface; optional transforms only when needed.
+
 ## Quickstart
 
 First, add the package as dev dependency:

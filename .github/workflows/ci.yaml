@@ -15,5 +15,4 @@ jobs:
     with:
       version: ${{ github.ref_name }}
       publish-command: |
-        pnpm -r -F './packages/configs/*' -F './packages/libs/*' \
-            exec pnpm publish --no-git-checks --access public
+        pnpm -r exec pnpm publish --no-git-checks --access public

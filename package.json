@@ -19,7 +19,7 @@
     "@mtth/eslint-plugin": "workspace:*",
     "@mtth/prettier-typescript": "workspace:*",
     "@mtth/tsconfig": "workspace:*",
-    "@types/node": "^24.0.0",
+    "@types/node": "^24.10.13",
     "@vitest/coverage-v8": "^4.0.18",
     "eslint": "^10.0.0",
     "prettier": "^3.8.1",
@@ -27,5 +27,10 @@
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
   },
-  "prettier": "@mtth/prettier-typescript"
+  "prettier": "@mtth/prettier-typescript",
+  "pnpm": {
+    "overrides": {
+      "minimatch": ">=10.2.1"
+    }
+  }
 }

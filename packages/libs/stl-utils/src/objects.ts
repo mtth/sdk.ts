@@ -8,10 +8,6 @@ import {upperCaseFirst} from './strings.js';
 
 const untruncate = untruncate_.default ?? untruncate_;
 
-type RelativeIndexable<T> = ArrayLike<T> & {
-  at?: (index: number) => T | undefined;
-};
-
 /** Convenience empty record type. */
 export type Empty = Record<string, never>;
 
@@ -530,6 +526,10 @@ export class PrettyFormatter {
     return '0x' + prefix + ellipsis(omitted) + suffix;
   }
 }
+
+type RelativeIndexable<T> = ArrayLike<T> & {
+  at?: (index: number) => T | undefined;
+};
 
 function ellipsis(omitted: number): string {
   return `... <${omitted} omitted> ...`;

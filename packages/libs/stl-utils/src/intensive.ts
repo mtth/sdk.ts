@@ -1,3 +1,13 @@
+/**
+ * Cooperative CPU-bound work for single-threaded apps (Node and browser UIs).
+ *
+ * Use this to chunk heavy computation so the event loop can stay responsive
+ * without the complexity of workers. Work is expressed as a generator that
+ * yields regularly; `run` inserts timed "breaths" and `yield* embed(op)` lets
+ * you compose intensive operations while preserving breath events and stats.
+ *
+ * Note that this improves responsiveness but does not reduce total CPU cost.
+ */
 import {assert} from '@mtth/stl-errors';
 import {setImmediate} from 'timers/promises';
 

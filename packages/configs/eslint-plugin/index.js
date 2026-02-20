@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   {
-    ignores: ['**/*.gen.*'],
+    ignores: ['**/.gen/', '**/*.gen.*'],
   },
   eslint.configs.recommended,
   tseslint.configs.strict,
